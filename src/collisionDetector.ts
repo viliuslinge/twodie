@@ -53,7 +53,7 @@ function circleRect(c: CircleObject, r: RectObject): boolean {
   const distY = c.position.y - testY;
   const distance = Math.sqrt(distX * distX + distY * distY);
 
-  if (distance <= c.size / 2) {
+  if (distance <= c.radius) {
     return true;
   }
   return false;
@@ -64,7 +64,7 @@ function circleCircle(c1: CircleObject, c2: CircleObject): boolean {
     Math.pow(c1.position.x - c2.position.x, 2) +
     Math.pow(c1.position.y - c2.position.y, 2);
 
-  if (squareDist <= Math.pow(c1.size / 2 + c2.size / 2, 2)) {
+  if (squareDist <= Math.pow(c1.radius + c2.radius, 2)) {
     return true;
   }
 

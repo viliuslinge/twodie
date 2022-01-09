@@ -8,13 +8,20 @@ export class RectObject extends BaseObject {
   position: IObjectPosition;
   isColliding: boolean;
 
-  constructor(x: number, y: number, speedX: number, speedY: number) {
+  constructor(props: {
+    height: number;
+    width: number;
+    posX: number;
+    posY: number;
+    speedX: number;
+    speedY: number;
+  }) {
     super();
     this.type = "rect";
-    this.width = 40;
-    this.height = 40;
-    this.speed = { x: speedX, y: speedY };
-    this.position = { x: x, y: y };
+    this.width = props.width;
+    this.height = props.height;
+    this.speed = { x: props.speedX, y: props.speedY };
+    this.position = { x: props.posX, y: props.posY };
     this.isColliding = false;
   }
 
