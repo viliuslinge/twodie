@@ -1,7 +1,7 @@
 import { CircleObject } from "./CircleObject";
-import { RectangularObject } from "./RectangularObject";
+import { RectObject } from "./RectObject";
 
-export type IObject = CircleObject | RectangularObject;
+export type IObject = CircleObject | RectObject;
 
 export abstract class BaseObject {
   abstract type: IObjectType;
@@ -10,7 +10,7 @@ export abstract class BaseObject {
   abstract isColliding: boolean;
 }
 
-type IObjectType = "circle" | "rectangular";
+type IObjectType = "circle" | "rect";
 
 export interface IObjectSpeed {
   x: number;

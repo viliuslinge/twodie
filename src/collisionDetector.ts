@@ -1,4 +1,4 @@
-import { IObject, CircleObject, RectangularObject } from "./objects";
+import { IObject, CircleObject, RectObject } from "./objects";
 
 export function detectCollisions(objects: IObject[]): void {
   for (let idx = 0; idx < objects.length; idx++) {
@@ -33,7 +33,7 @@ function checkIntersection(o1: IObject, o2: IObject): boolean {
   }
 }
 
-function circleRect(c: CircleObject, r: RectangularObject): boolean {
+function circleRect(c: CircleObject, r: RectObject): boolean {
   let testX: number = c.position.x;
   let testY: number = c.position.y;
 
@@ -71,7 +71,7 @@ function circleCircle(c1: CircleObject, c2: CircleObject): boolean {
   return false;
 }
 
-function rectRect(r1: RectangularObject, r2: RectangularObject): boolean {
+function rectRect(r1: RectObject, r2: RectObject): boolean {
   if (
     r1.position.x + r1.width >= r2.position.x &&
     r1.position.x <= r2.position.x + r2.width &&

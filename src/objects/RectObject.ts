@@ -1,7 +1,7 @@
 import { BaseObject, IObjectSpeed, IObjectPosition } from "./BaseObject";
 
-export class RectangularObject extends BaseObject {
-  type: "rectangular";
+export class RectObject extends BaseObject {
+  type: "rect";
   width: number;
   height: number;
   speed: IObjectSpeed;
@@ -10,7 +10,7 @@ export class RectangularObject extends BaseObject {
 
   constructor(x: number, y: number, speedX: number, speedY: number) {
     super();
-    this.type = "rectangular";
+    this.type = "rect";
     this.width = 40;
     this.height = 40;
     this.speed = { x: speedX, y: speedY };

@@ -1,28 +1,39 @@
-import { IObject, CircleObject, RectangularObject } from "./objects";
+import { IObject } from "./objects";
+import { createCanvas } from "./canvasCreator";
+import { detectCollisions } from "./collisionDetector";
 
 export class Game {
+  private ctx: CanvasRenderingContext2D;
   objects: IObject[];
 
   constructor(public width: number, public height: number) {
+    this.ctx = createCanvas(this.width, this.height).ctx;
     this.objects = [];
   }
 
-  start(): void {
-    this.objects = [
-      new CircleObject(250, 50, 0, 1),
-      new RectangularObject(250, 300, 0, -1),
-      new CircleObject(150, 0, 1, 1),
-      new RectangularObject(250, 150, 1, 1),
-      new CircleObject(350, 75, -1, 1),
-      new RectangularObject(300, 300, 1, 0),
-    ];
-  }
+  load = (objects: IObject[]): void => {
+    this.objects = objects;
+  };
 
-  draw(ctx: CanvasRenderingContext2D): void {
+  start = (): void => {
+    requestAnimationFrame(this.gameLoop);
+  };
+
+  private draw = (ctx: CanvasRenderingContext2D): void => {
     this.objects.forEach((a) => a.draw(ctx));
-  }
+  };
 
-  update(): void {
+  private update = (): void => {
     this.objects.forEach((a) => a.update());
-  }
+  };
+
+  private gameLoop = (): void => {
+    this.ctx.clearRect(0, 0, this.width, this.height);
+
+    this.update();
+    detectCollisions(this.objects);
+    this.draw(this.ctx);
+
+    requestAnimationFrame(this.gameLoop);
+  };
 }
