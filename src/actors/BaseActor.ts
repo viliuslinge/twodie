@@ -1,4 +1,6 @@
 import { Shape } from "../shapes";
+import { applyCollisionPhysics, applyFrictionPhysics } from "../physics";
+import { ENVIRONMENTAL_FRICTION } from "../index";
 
 import { FirstActor } from "./FirstActor";
 import { SecondActor } from "./SecondActor";
@@ -7,6 +9,7 @@ export type Actor = FirstActor | SecondActor;
 
 export interface IBaseActor {
   shape?: Shape;
+  mass: number;
   positionX: number;
   positionY: number;
   velocityX: number;
@@ -14,6 +17,7 @@ export interface IBaseActor {
 }
 
 export interface IBaseActorInput {
+  mass: number;
   positionX: number;
   positionY: number;
   velocityX: number;
@@ -22,6 +26,7 @@ export interface IBaseActorInput {
 
 export abstract class BaseActor implements IBaseActor {
   shape?: IBaseActor["shape"];
+  mass: IBaseActor["mass"];
   positionX: IBaseActor["positionX"];
   positionY: IBaseActor["positionY"];
   velocityX: IBaseActor["velocityX"];
@@ -29,6 +34,7 @@ export abstract class BaseActor implements IBaseActor {
 
   constructor(props: IBaseActorInput) {
     this.shape = undefined;
+    this.mass = props.mass;
     this.positionX = props.positionX;
     this.positionY = props.positionY;
     this.velocityX = props.velocityX;
@@ -55,7 +61,18 @@ export abstract class BaseActor implements IBaseActor {
     this.velocityY = y;
   };
 
-  abstract render(ctx: CanvasRenderingContext2D): void;
+  update(): void {
+    if (
+      this.shape &&
+      this.shape.isOverlapEnabled &&
+      this.shape.colliders[0] &&
+      this.shape.colliders[0].isOverlapEnabled
+    ) {
+      applyCollisionPhysics(this, this.shape.colliders[0].actor);
+    }
 
-  abstract update(): void;
+    applyFrictionPhysics(this, ENVIRONMENTAL_FRICTION);
+  }
+
+  abstract render(ctx: CanvasRenderingContext2D): void;
 }

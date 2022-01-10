@@ -1,4 +1,4 @@
-import { IBaseActor } from "../actors";
+import { Actor } from "../actors";
 
 import { BaseShape, IBaseShapeInput } from "./BaseShape";
 
@@ -10,7 +10,7 @@ export class CircleShape extends BaseShape {
   readonly type: "circle";
   readonly radius: number;
 
-  constructor(actor: IBaseActor, props: ICircleShapeInput) {
+  constructor(actor: Actor, props: ICircleShapeInput) {
     super(actor, {
       positionX: props.positionX,
       positionY: props.positionY,

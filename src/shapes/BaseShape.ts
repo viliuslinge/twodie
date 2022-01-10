@@ -1,4 +1,4 @@
-import { IBaseActor } from "../actors";
+import { Actor } from "../actors";
 
 import { RectShape } from "./RectShape";
 import { CircleShape } from "./CircleShape";
@@ -38,7 +38,7 @@ export abstract class BaseShape implements IBaseShape {
   readonly isOverlapEnabled: IBaseShape["isOverlapEnabled"];
   colliders: IBaseShape["colliders"];
 
-  constructor(public actor: IBaseActor, props: IBaseShapeInput) {
+  constructor(public actor: Actor, props: IBaseShapeInput) {
     this._positionX = props.positionX;
     this._positionY = props.positionY;
     this.isOverlapEnabled = props.isOverlapEnabled;

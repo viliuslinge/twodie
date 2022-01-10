@@ -13,13 +13,13 @@ export function detectCollisions(objects: Actor[]): void {
     for (let targetIdx = idx + 1; targetIdx < objects.length; targetIdx++) {
       if (idx === targetIdx) break;
 
-      const { shape } = objects[idx];
-      const { shape: targetShape } = objects[targetIdx];
+      const { shape: shape1 } = objects[idx];
+      const { shape: shape2 } = objects[targetIdx];
 
-      if (shape && targetShape) {
-        if (intersects(shape, targetShape)) {
-          shape.addCollider(targetShape);
-          targetShape.addCollider(shape);
+      if (shape1 && shape2) {
+        if (intersects(shape1, shape2)) {
+          shape1.addCollider(shape2);
+          shape2.addCollider(shape1);
         }
       }
     }

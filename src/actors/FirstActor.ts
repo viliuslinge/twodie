@@ -1,5 +1,4 @@
 import { Game } from "../Game";
-import { RectShape } from "../shapes";
 
 import { BaseActor, IBaseActorInput } from "./BaseActor";
 
@@ -12,6 +11,7 @@ export class FirstActor extends BaseActor {
 
   constructor(private _game: Game, props: IFirstActorInput) {
     super({
+      mass: props.mass,
       positionX: props.positionX,
       positionY: props.positionY,
       velocityX: props.velocityX,
@@ -21,63 +21,17 @@ export class FirstActor extends BaseActor {
     this.maxVelocity = props.maxVelocity;
   }
 
-  render(ctx: CanvasRenderingContext2D): void {
+  render = (ctx: CanvasRenderingContext2D): void => {
     ctx.fillStyle = this.shape?.isColliding ? "pink" : "grey";
     ctx.fillRect(this.positionX, this.positionY, 50, 50);
-  }
+  };
 
-  update(): void {
+  update = (): void => {
+    super.update();
+
     this.setPosition(
       this.positionX + this.velocityX,
       this.positionY + this.velocityY
     );
-  }
+  };
 }
-
-// moveLeft = (): void => {
-//   this.velocityX = -this.maxVelocity;
-// };
-
-// moveRight = (): void => {
-//   this.velocityX = this.maxVelocity;
-// };
-
-// stop = (): void => {
-//   this.velocityX = 0;
-// };
-
-// private initKeyboardHandlers() {
-//   document.addEventListener("keydown", (e) => {
-//     switch (e.key) {
-//       case "ArrowLeft": {
-//         this.moveLeft();
-
-//         break;
-//       }
-//       case "ArrowRight": {
-//         this.moveRight();
-
-//         break;
-//       }
-//     }
-//   });
-
-//   document.addEventListener("keyup", (e) => {
-//     switch (e.key) {
-//       case "ArrowLeft": {
-//         if (this.velocityX < 0) {
-//           this.stop();
-//         }
-
-//         break;
-//       }
-//       case "ArrowRight": {
-//         if (this.velocityX > 0) {
-//           this.stop();
-//         }
-
-//         break;
-//       }
-//     }
-//   });
-// }

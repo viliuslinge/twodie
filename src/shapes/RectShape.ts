@@ -1,4 +1,4 @@
-import { IBaseActor } from "../actors";
+import { Actor } from "../actors";
 
 import { BaseShape, IBaseShapeInput } from "./BaseShape";
 
@@ -12,7 +12,7 @@ export class RectShape extends BaseShape {
   readonly width: number;
   readonly height: number;
 
-  constructor(actor: IBaseActor, props: IRectShapeInput) {
+  constructor(actor: Actor, props: IRectShapeInput) {
     super(actor, {
       positionX: props.positionX,
       positionY: props.positionY,
