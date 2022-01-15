@@ -62,7 +62,7 @@ export class Hero extends BaseObject<AnimatedSprite<ISpriteAnimations>> {
         },
       }),
       attributes: {
-        velocity: { x: 5, y: 0 },
+        velocity: { x: 3, y: 0 },
         maxVelocity: 5,
         mass: 1,
         friction: 1,

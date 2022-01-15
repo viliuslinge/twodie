@@ -48,6 +48,11 @@ function applyCollision(
     vRelativeVelocity.x * vCollisionNorm.x +
     vRelativeVelocity.y * vCollisionNorm.y;
 
+  speed *= Math.min(
+    target.attributes.restitution,
+    target.attributes.restitution
+  );
+
   if (speed < 0) return;
 
   const impulse =

@@ -27,10 +27,10 @@ export class Enemy extends BaseObject<Sprite> {
         },
       }),
       attributes: {
-        velocity: { x: -5, y: 0 },
+        velocity: { x: -3, y: 0 },
         maxVelocity: 5,
         mass: 1,
-        friction: 0.996,
+        friction: 1,
         restitution: 1,
       },
     });
@@ -40,7 +40,6 @@ export class Enemy extends BaseObject<Sprite> {
     this.colliders.forEach((it) => {
       Physics.applyCollision(this, it);
     });
-    Physics.applyFriction(this);
 
     this.sprite.transform.setPosition({
       x: this.sprite.transform.position.x + this.attributes.velocity.x,
