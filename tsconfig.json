@@ -12,8 +12,12 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "allowJs": true,
-    "checkJs": true
+    "checkJs": true,
+    "baseUrl": ".",
+    "paths": {
+      "engine/*": ["src/engine/*"]
+    }
   },
-  "include": ["src/**/*", "index.d.ts"],
+  "include": ["./src", "index.d.ts"],
   "exclude": ["node_modules"]
 }

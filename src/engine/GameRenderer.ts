@@ -1,10 +1,12 @@
-export function createCanvas(
+export type IGameRenderer = CanvasRenderingContext2D;
+
+export function createGameRenderer(
   width: number,
   height: number
-): { ctx: CanvasRenderingContext2D } {
+): IGameRenderer {
   const root = document.getElementById("root");
   if (!root) {
-    throw new Error("Root element could not be found");
+    throw new Error("Missing root element");
   }
 
   const canvas = document.createElement("canvas");
@@ -16,10 +18,8 @@ export function createCanvas(
 
   const ctx = canvas.getContext("2d");
   if (!ctx) {
-    throw new Error("Canvas context could not be found");
+    throw new Error("Missing canvas element");
   }
 
-  return {
-    ctx,
-  };
+  return ctx;
 }

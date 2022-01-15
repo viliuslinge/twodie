@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 
 const prod = process.env.NODE_ENV === "production";
 
@@ -10,13 +11,21 @@ module.exports = {
     filename: "main.js",
     path: path.resolve(__dirname, "dist"),
   },
+  resolve: {
+    plugins: [
+      new TsconfigPathsPlugin({
+        configFile: path.resolve(".", "tsconfig.json"),
+        extensions: [".ts", ".tsx", ".js", "jsx", ".json"],
+      }),
+    ],
+  },
   module: {
     rules: [
       {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
         resolve: {
-          extensions: [".ts", ".tsx", ".js", ".json"],
+          extensions: [".ts", ".tsx", ".js", "jsx", ".json"],
         },
         use: "ts-loader",
       },
