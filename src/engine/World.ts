@@ -19,17 +19,17 @@ export class World<T extends BaseObject = BaseObject> {
   };
 
   update = (): void => {
-    this.objects.forEach((a) => a.update());
+    this.objects.forEach((it) => it.update());
     CollisionDetector.detect(this.objects);
   };
 
   render = (renderer: IGameRenderer): void => {
-    this.objects.forEach((a) => {
-      a.render(renderer);
+    this.objects.forEach((it) => {
+      it.render(renderer);
 
       if (DEBUG_MODE) {
-        a.renderDebug(renderer);
-        a.shape.renderDebug(renderer, { isColliding: a.isColliding });
+        it.renderDebug(renderer);
+        it.shape.renderDebug(renderer, { isColliding: it.isColliding });
       }
     });
   };

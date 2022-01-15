@@ -18,8 +18,8 @@ function detect(objects: BaseObject[]): void {
       const targetObj = objects[targetIdx];
 
       if (intersects(obj.shape, targetObj.shape)) {
-        obj.setColliders([...obj.colliders, targetObj]);
-        targetObj.setColliders([...targetObj.colliders, obj]);
+        obj.setColliders([...obj.colliders, targetObj.serialize()]);
+        targetObj.setColliders([...targetObj.colliders, obj.serialize()]);
       }
     }
   }

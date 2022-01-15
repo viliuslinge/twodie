@@ -9,6 +9,10 @@ export interface ISpriteProperties {
   transform: ITransformProperties;
 }
 
+export interface ISpriteSerialized {
+  transform: ITransformProperties;
+}
+
 export class Sprite {
   readonly image: HTMLImageElement;
   readonly frameWidth: number;
@@ -35,5 +39,11 @@ export class Sprite {
       this.frameWidth * this.transform.scale,
       this.frameHeight * this.transform.scale
     );
+  };
+
+  serialize = (): ISpriteSerialized => {
+    return {
+      transform: { ...this.transform },
+    };
   };
 }
