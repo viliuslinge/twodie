@@ -6,6 +6,11 @@ export class GameLoop {
   start = (): void => {
     const { renderer, world, properties } = this.game;
 
+    if (!world) {
+      console.error("World is missing");
+      return;
+    }
+
     renderer.clearRect(0, 0, properties.width, properties.height);
     world.update();
     world.render(renderer);

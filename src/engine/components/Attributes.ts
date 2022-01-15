@@ -4,8 +4,6 @@ interface IVelocity {
 }
 
 export interface IAttributesProperties {
-  height: number;
-  width: number;
   velocity: IVelocity;
   maxVelocity: number;
   mass: number;
@@ -19,8 +17,6 @@ export interface IAttributesProperties {
 }
 
 export class Attributes {
-  readonly height: number;
-  readonly width: number;
   readonly maxVelocity: number;
   readonly mass: number;
   readonly friction: number;
@@ -28,8 +24,6 @@ export class Attributes {
   velocity: IVelocity;
 
   constructor(properties: IAttributesProperties) {
-    this.height = properties.height;
-    this.width = properties.width;
     this.velocity = properties.velocity;
     this.maxVelocity = properties.maxVelocity;
     this.mass = properties.mass;

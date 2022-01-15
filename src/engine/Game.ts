@@ -10,14 +10,14 @@ interface IGameProperties {
 export class Game {
   private gameLoop: GameLoop;
   renderer: IGameRenderer;
+  world?: World;
 
-  constructor(public world: World, public properties: IGameProperties) {
+  constructor(public properties: IGameProperties) {
     this.properties = properties;
     this.renderer = createGameRenderer(
       this.properties.width,
       this.properties.height
     );
-    this.world = world;
     this.gameLoop = new GameLoop(this);
   }
 
@@ -27,5 +27,9 @@ export class Game {
 
   stop = (): void => {
     //TODO:
+  };
+
+  setWorld = (world: World): void => {
+    this.world = world;
   };
 }

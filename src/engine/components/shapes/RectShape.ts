@@ -12,15 +12,23 @@ export interface IRectShapeProperties {
 
 export class RectShape implements IBaseShape {
   readonly type: "rect";
-  readonly width: number;
-  readonly height: number;
+  private _width: number;
+  private _height: number;
   transform: Transform;
 
   constructor(properties: IRectShapeProperties) {
     this.type = "rect";
-    this.width = properties.width;
-    this.height = properties.height;
+    this._width = properties.width;
+    this._height = properties.height;
     this.transform = new Transform(properties.transform);
+  }
+
+  get width(): number {
+    return this._width * this.transform.scale;
+  }
+
+  get height(): number {
+    return this._height * this.transform.scale;
   }
 
   render = (renderer: IGameRenderer): void => {

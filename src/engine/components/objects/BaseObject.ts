@@ -6,41 +6,42 @@ import { Attributes, IAttributesProperties } from "../Attributes";
 import { SpriteType } from "../sprites";
 import { ShapeType } from "../shapes";
 
-export interface IBaseObjectProperties {
+export interface IBaseObjectProperties<T extends SpriteType = SpriteType> {
   shape: ShapeType;
-  sprite: SpriteType;
-  transform: ITransformProperties;
+  sprite: T;
   attributes: IAttributesProperties;
 }
 
-export abstract class BaseObject {
+export abstract class BaseObject<T extends SpriteType = SpriteType> {
   readonly id: string;
-  readonly transform: Transform;
   readonly attributes: Attributes;
   shape: ShapeType;
-  sprite: SpriteType;
+  sprite: T;
   colliders: BaseObject[];
 
-  constructor(properties: IBaseObjectProperties) {
+  constructor(properties: IBaseObjectProperties<T>) {
     this.id = uuid();
     this.shape = properties.shape;
     this.sprite = properties.sprite;
-    this.transform = new Transform(properties.transform);
     this.attributes = new Attributes(properties.attributes);
     this.colliders = [];
   }
 
   abstract update(): void;
 
-  abstract render(renderer: IGameRenderer): void;
-
-  setShape = (shape: ShapeType): void => {
-    this.shape = shape;
-  };
-
-  setSprite = (sprite: SpriteType): void => {
-    this.sprite = sprite;
-  };
+  render(renderer: IGameRenderer): void {
+    renderer.beginPath();
+    renderer.moveTo(
+      this.sprite.transform.position.x,
+      this.sprite.transform.position.y
+    );
+    renderer.lineTo(
+      this.sprite.transform.position.x + this.attributes.velocity.x * 10,
+      this.sprite.transform.position.y + this.attributes.velocity.y * 10
+    );
+    renderer.strokeStyle = "black";
+    renderer.stroke();
+  }
 
   setColliders = (colliders: BaseObject[]): void => {
     this.colliders = colliders;
@@ -50,12 +51,3 @@ export abstract class BaseObject {
     return !!this.colliders.length;
   }
 }
-
-// ctx.beginPath();
-// ctx.moveTo(this.positionX, this.positionY);
-// ctx.lineTo(
-//   this.positionX + this.actor.velocityX * 25,
-//   this.positionY + this.actor.velocityY * 25
-// );
-// ctx.strokeStyle = "black";
-// ctx.stroke();
