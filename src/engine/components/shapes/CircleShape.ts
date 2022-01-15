@@ -24,7 +24,10 @@ export class CircleShape implements IBaseShape {
     return this._radius * this.transform.scale;
   }
 
-  render = (renderer: IGameRenderer): void => {
+  renderDebug = (
+    renderer: IGameRenderer,
+    properties: { isColliding: boolean }
+  ): void => {
     renderer.beginPath();
     renderer.arc(
       this.transform.position.x,
@@ -33,8 +36,8 @@ export class CircleShape implements IBaseShape {
       0,
       2 * Math.PI
     );
-    renderer.lineWidth = 0.5;
-    renderer.strokeStyle = "orange";
+    renderer.lineWidth = 1;
+    renderer.strokeStyle = properties.isColliding ? "#ff0000" : "#00ff43";
     renderer.stroke();
   };
 }

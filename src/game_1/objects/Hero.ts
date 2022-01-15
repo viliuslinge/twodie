@@ -138,7 +138,6 @@ export class Hero extends BaseObject<AnimatedSprite<ISpriteAnimations>> {
 
   render(renderer: IGameRenderer): void {
     super.render(renderer);
-    this.sprite.render(renderer);
   }
 
   private moveLeft = (): void => {

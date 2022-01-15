@@ -31,9 +31,12 @@ export class RectShape implements IBaseShape {
     return this._height * this.transform.scale;
   }
 
-  render = (renderer: IGameRenderer): void => {
-    renderer.lineWidth = 0.5;
-    renderer.strokeStyle = "orange";
+  renderDebug = (
+    renderer: IGameRenderer,
+    properties: { isColliding: boolean }
+  ): void => {
+    renderer.lineWidth = 1;
+    renderer.strokeStyle = properties.isColliding ? "#ff0000" : "#00ff43";
     renderer.strokeRect(
       this.transform.position.x,
       this.transform.position.y,

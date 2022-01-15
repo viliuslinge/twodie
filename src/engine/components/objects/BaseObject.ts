@@ -30,6 +30,10 @@ export abstract class BaseObject<T extends SpriteType = SpriteType> {
   abstract update(): void;
 
   render(renderer: IGameRenderer): void {
+    this.sprite.render(renderer);
+  }
+
+  renderDebug(renderer: IGameRenderer): void {
     renderer.beginPath();
     renderer.moveTo(
       this.sprite.transform.position.x,

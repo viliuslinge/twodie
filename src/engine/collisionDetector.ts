@@ -1,95 +1,94 @@
-// import { Actor } from "./actors";
-// import { CircleShape, RectShape, Shape } from "./shapes";
+import { BaseObject } from "./components/objects";
+import { ShapeType, CircleShape, RectShape } from "./components/shapes";
 
-// export function detectCollisions(objects: Actor[]): void {
-//   for (let idx = 0; idx < objects.length; idx++) {
-//     const { shape } = objects[idx];
-//     if (!shape) break;
+export const CollisionDetector = {
+  detect,
+};
 
-//     shape.resetColliders();
-//   }
+function detect(objects: BaseObject[]): void {
+  for (let idx = 0; idx < objects.length; idx++) {
+    objects[idx].setColliders([]);
+  }
 
-//   for (let idx = 0; idx < objects.length; idx++) {
-//     for (let targetIdx = 0; targetIdx < objects.length; targetIdx++) {
-//       if (idx === targetIdx) break;
+  for (let idx = 0; idx < objects.length; idx++) {
+    for (let targetIdx = 0; targetIdx < objects.length; targetIdx++) {
+      if (idx === targetIdx) break;
 
-//       const { shape: shape1 } = objects[idx];
-//       const { shape: shape2 } = objects[targetIdx];
+      const obj = objects[idx];
+      const targetObj = objects[targetIdx];
 
-//       if (shape1 && shape2) {
-//         if (intersects(shape1, shape2)) {
-//           shape1.addCollider(shape2);
-//           shape2.addCollider(shape1);
-//         }
-//       }
-//     }
-//   }
-// }
+      if (intersects(obj.shape, targetObj.shape)) {
+        obj.setColliders([...obj.colliders, targetObj]);
+        targetObj.setColliders([...targetObj.colliders, obj]);
+      }
+    }
+  }
+}
 
-// function intersects(o1: Shape, o2: Shape): boolean {
-//   if (o1.type === "circle") {
-//     if (o2.type === "circle") {
-//       return circleCircle(o1, o2);
-//     } else {
-//       return circleRect(o1, o2);
-//     }
-//   } else {
-//     if (o2.type === "circle") {
-//       return circleRect(o2, o1);
-//     } else {
-//       return rectRect(o1, o2);
-//     }
-//   }
-// }
+function intersects(s1: ShapeType, s2: ShapeType): boolean {
+  if (s1.type === "circle") {
+    if (s2.type === "circle") {
+      return circleCircle(s1, s2);
+    } else {
+      return circleRect(s1, s2);
+    }
+  } else {
+    if (s2.type === "circle") {
+      return circleRect(s2, s1);
+    } else {
+      return rectRect(s1, s2);
+    }
+  }
+}
 
-// function circleRect(c: CircleShape, r: RectShape): boolean {
-//   let x: number = c.positionX;
-//   let y: number = c.positionY;
+function circleRect(c: CircleShape, r: RectShape): boolean {
+  let x: number = c.transform.position.x;
+  let y: number = c.transform.position.y;
 
-//   if (c.positionX < r.positionX) {
-//     x = r.positionX;
-//   } else if (c.positionX > r.positionX + r.width) {
-//     x = r.positionX + r.width;
-//   }
+  if (c.transform.position.x < c.transform.position.y) {
+    x = r.transform.position.x;
+  } else if (c.transform.position.x > r.transform.position.x + r.width) {
+    x = r.transform.position.x + r.width;
+  }
 
-//   if (c.positionY < r.positionY) {
-//     y = r.positionY;
-//   } else if (c.positionY > r.positionY + r.height) {
-//     y = r.positionY + r.height;
-//   }
+  if (c.transform.position.y < r.transform.position.y) {
+    y = r.transform.position.y;
+  } else if (c.transform.position.y > r.transform.position.y + r.height) {
+    y = r.transform.position.y + r.height;
+  }
 
-//   const distX = c.positionX - x;
-//   const distY = c.positionY - y;
-//   const distance = Math.sqrt(distX * distX + distY * distY);
+  const distX = c.transform.position.x - x;
+  const distY = c.transform.position.y - y;
+  const distance = Math.sqrt(distX * distX + distY * distY);
 
-//   if (distance <= c.radius) {
-//     return true;
-//   }
+  if (distance <= c.radius) {
+    return true;
+  }
 
-//   return false;
-// }
+  return false;
+}
 
-// function circleCircle(c1: CircleShape, c2: CircleShape): boolean {
-//   const squareDist =
-//     Math.pow(c1.positionX - c2.positionX, 2) +
-//     Math.pow(c1.positionY - c2.positionY, 2);
+function circleCircle(c1: CircleShape, c2: CircleShape): boolean {
+  const squareDist =
+    Math.pow(c1.transform.position.x - c2.transform.position.x, 2) +
+    Math.pow(c1.transform.position.y - c2.transform.position.y, 2);
 
-//   if (squareDist <= Math.pow(c1.radius + c2.radius, 2)) {
-//     return true;
-//   }
+  if (squareDist <= Math.pow(c1.radius + c2.radius, 2)) {
+    return true;
+  }
 
-//   return false;
-// }
+  return false;
+}
 
-// function rectRect(r1: RectShape, r2: RectShape): boolean {
-//   if (
-//     r1.positionX + r1.width >= r2.positionX &&
-//     r1.positionX <= r2.positionX + r2.width &&
-//     r1.positionY + r1.height >= r2.positionY &&
-//     r1.positionY <= r2.positionY + r2.height
-//   ) {
-//     return true;
-//   }
+function rectRect(r1: RectShape, r2: RectShape): boolean {
+  if (
+    r1.transform.position.x + r1.width >= r2.transform.position.x &&
+    r1.transform.position.x <= r2.transform.position.x + r2.width &&
+    r1.transform.position.y + r1.height >= r2.transform.position.y &&
+    r1.transform.position.y <= r2.transform.position.y + r2.height
+  ) {
+    return true;
+  }
 
-//   return false;
-// }
+  return false;
+}

@@ -7,6 +7,8 @@ interface IGameProperties {
   height: number;
 }
 
+export const DEBUG_MODE: boolean = true;
+
 export class Game {
   private gameLoop: GameLoop;
   renderer: IGameRenderer;

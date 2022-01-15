@@ -2,6 +2,7 @@ import { Game } from "engine/Game";
 import { World } from "engine/World";
 
 import { Hero } from "./objects/Hero";
+import { Enemy } from "./objects/Enemy";
 
 const GAME_WIDTH: number = 1500;
 const GAME_HEIGHT: number = 900;
@@ -13,7 +14,9 @@ const game = new Game({
 
 const world = new World();
 const hero = new Hero();
+const enemy = new Enemy();
 world.addObject(hero);
+world.addObject(enemy);
 game.setWorld(world);
 
 export { game };

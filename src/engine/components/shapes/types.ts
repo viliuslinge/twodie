@@ -9,5 +9,8 @@ export type ShapeType = RectShape | CircleShape;
 
 export interface IBaseShape {
   transform: Transform;
-  render(renderer: IGameRenderer): void;
+  renderDebug(
+    renderer: IGameRenderer,
+    properties: { isColliding: boolean }
+  ): void;
 }
