@@ -39,7 +39,10 @@ export class AnimatedSprite<T extends string = string> extends Sprite {
   }
 
   setCurrentAnimationID = (id: T): void => {
-    this.currentAnimationID = id;
+    if (this.currentAnimationID !== id) {
+      this.currentAnimationFrameIdx = 0;
+      this.currentAnimationID = id;
+    }
   };
 
   render = (renderer: IGameRenderer): void => {

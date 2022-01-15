@@ -5,7 +5,17 @@ import { BaseObject } from "engine/components/objects";
 
 import spritePNG from "../../../assets/sprites/sprite.png";
 
-export class Hero extends BaseObject<AnimatedSprite<"walk" | "dance">> {
+type ISpriteAnimations =
+  | "idleUp"
+  | "idleDown"
+  | "idleLeft"
+  | "idleRight"
+  | "walkUp"
+  | "walkDown"
+  | "walkLeft"
+  | "walkRight";
+
+export class Hero extends BaseObject<AnimatedSprite<ISpriteAnimations>> {
   constructor() {
     super({
       shape: new RectShape({
@@ -16,19 +26,34 @@ export class Hero extends BaseObject<AnimatedSprite<"walk" | "dance">> {
           scale: 1,
         },
       }),
-      sprite: new AnimatedSprite<"walk" | "dance">({
+      sprite: new AnimatedSprite<ISpriteAnimations>({
         image: spritePNG,
         animationDuration: 16,
         frameHeight: 32,
         frameWidth: 32,
-        currentAnimationID: "walk",
+        currentAnimationID: "idleDown",
         currentAnimationFrameIdx: 0,
         animations: {
-          walk: [
+          idleDown: [[32, 0]],
+          idleLeft: [[32, 32]],
+          idleRight: [[32, 64]],
+          idleUp: [[32, 96]],
+          walkDown: [
             [0, 0],
             [64, 0],
           ],
-          dance: [],
+          walkLeft: [
+            [0, 32],
+            [64, 32],
+          ],
+          walkRight: [
+            [0, 64],
+            [64, 64],
+          ],
+          walkUp: [
+            [0, 96],
+            [64, 96],
+          ],
         },
         transform: {
           position: { x: 50, y: 50 },
@@ -69,24 +94,28 @@ export class Hero extends BaseObject<AnimatedSprite<"walk" | "dance">> {
       switch (e.key) {
         case "ArrowLeft": {
           if (this.attributes.velocity.x < 0) {
+            this.sprite.setCurrentAnimationID("idleLeft");
             this.stop();
           }
           break;
         }
         case "ArrowRight": {
           if (this.attributes.velocity.x > 0) {
+            this.sprite.setCurrentAnimationID("idleRight");
             this.stop();
           }
           break;
         }
         case "ArrowUp": {
           if (this.attributes.velocity.y < 0) {
+            this.sprite.setCurrentAnimationID("idleUp");
             this.stop();
           }
           break;
         }
         case "ArrowDown": {
           if (this.attributes.velocity.y > 0) {
+            this.sprite.setCurrentAnimationID("idleDown");
             this.stop();
           }
           break;
@@ -113,6 +142,7 @@ export class Hero extends BaseObject<AnimatedSprite<"walk" | "dance">> {
   }
 
   private moveLeft = (): void => {
+    this.sprite.setCurrentAnimationID("walkLeft");
     this.attributes.setVelocity({
       x: -this.attributes.maxVelocity,
       y: this.attributes.velocity.y,
@@ -120,6 +150,7 @@ export class Hero extends BaseObject<AnimatedSprite<"walk" | "dance">> {
   };
 
   private moveRight = (): void => {
+    this.sprite.setCurrentAnimationID("walkRight");
     this.attributes.setVelocity({
       x: this.attributes.maxVelocity,
       y: this.attributes.velocity.y,
@@ -127,6 +158,7 @@ export class Hero extends BaseObject<AnimatedSprite<"walk" | "dance">> {
   };
 
   private moveUp = (): void => {
+    this.sprite.setCurrentAnimationID("walkUp");
     this.attributes.setVelocity({
       x: this.attributes.velocity.x,
       y: -this.attributes.maxVelocity,
@@ -134,6 +166,7 @@ export class Hero extends BaseObject<AnimatedSprite<"walk" | "dance">> {
   };
 
   private moveDown = (): void => {
+    this.sprite.setCurrentAnimationID("walkDown");
     this.attributes.setVelocity({
       x: this.attributes.velocity.x,
       y: this.attributes.maxVelocity,
