@@ -1,15 +1,12 @@
-interface IPosition {
-  x: number;
-  y: number;
-}
+import { ICoord } from "../shared";
 
 export interface ITransformProperties {
-  position: IPosition;
+  position: ICoord;
   scale: number;
 }
 
 export class Transform {
-  position: IPosition;
+  position: ICoord;
   scale: number;
 
   constructor(properties: ITransformProperties) {
@@ -17,7 +14,7 @@ export class Transform {
     this.scale = properties.scale;
   }
 
-  setPosition = (position: IPosition): void => {
+  setPosition = (position: ICoord): void => {
     this.position = {
       x: position.x,
       y: position.y,

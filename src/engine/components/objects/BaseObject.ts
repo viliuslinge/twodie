@@ -1,14 +1,13 @@
 import { uuid } from "../../lib/uuid";
 import { IGameRenderer } from "../../GameRenderer";
 
-import { Transform, ITransformProperties } from "../Transform";
 import {
   Attributes,
   IAttributesSerialized,
   IAttributesProperties,
 } from "../Attributes";
-import { SpriteType, ISpriteSerialized } from "../sprites";
-import { ShapeType } from "../shapes";
+import { ShapeType, IShapeSerialized } from "../shapes";
+import { SpriteType } from "../sprites";
 
 export interface IBaseObjectProperties<T extends SpriteType = SpriteType> {
   shape: ShapeType;
@@ -19,7 +18,16 @@ export interface IBaseObjectProperties<T extends SpriteType = SpriteType> {
 export interface IBaseObjectSerialized {
   id: string;
   attributes: IAttributesSerialized;
-  sprite: ISpriteSerialized;
+  shape: IShapeSerialized;
+}
+
+interface ICollider {
+  objectRef: BaseObject;
+  /**
+   * State snapshot of the object that intersects during the collision.
+   * Real reference should not be stored here as its state might change during the update phase.
+   */
+  objectSnapshot: IBaseObjectSerialized;
 }
 
 export abstract class BaseObject<T extends SpriteType = SpriteType> {
@@ -27,11 +35,7 @@ export abstract class BaseObject<T extends SpriteType = SpriteType> {
   readonly attributes: Attributes;
   shape: ShapeType;
   sprite: T;
-  /**
-   * Snapshots of objects that intersect during the collision.
-   * Real references should not be stored here as their state might change during the update phase.
-   */
-  colliders: IBaseObjectSerialized[];
+  colliders: ICollider[];
 
   constructor(properties: IBaseObjectProperties<T>) {
     this.id = uuid();
@@ -65,12 +69,16 @@ export abstract class BaseObject<T extends SpriteType = SpriteType> {
     return {
       id: this.id,
       attributes: this.attributes.serialize(),
-      sprite: this.sprite.serialize(),
+      shape: this.shape.serialize(),
     };
   };
 
-  setColliders = (colliders: IBaseObjectSerialized[]): void => {
-    this.colliders = colliders;
+  addCollider = (collider: ICollider): void => {
+    this.colliders.push(collider);
+  };
+
+  resetColliders = (): void => {
+    this.colliders = [];
   };
 
   get isColliding(): boolean {

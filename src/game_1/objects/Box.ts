@@ -2,48 +2,45 @@ import { IGameRenderer } from "engine/GameRenderer";
 import { RectShape } from "engine/components/shapes";
 import { Sprite } from "engine/components/sprites";
 import { BaseObject } from "engine/components/objects";
-import { Physics } from "engine/Physics";
+import { Movement } from "engine/components/Movement";
 
 import spritePNG from "../../../assets/sprites/sprite.png";
 
-export class Enemy extends BaseObject<Sprite> {
+export class Box extends BaseObject<Sprite> {
   constructor() {
     super({
       shape: new RectShape({
-        width: 32,
-        height: 32,
+        width: 300,
+        height: 500,
         transform: {
-          position: { x: 800, y: 300 },
+          position: { x: 600, y: 250 },
           scale: 1,
         },
       }),
       sprite: new Sprite({
         image: spritePNG,
-        frameHeight: 50,
-        frameWidth: 50,
+        frameHeight: 100,
+        frameWidth: 200,
         transform: {
-          position: { x: 800, y: 300 },
+          position: { x: 600, y: 250 },
           scale: 1,
         },
       }),
       attributes: {
-        velocity: { x: -3, y: 0 },
+        velocity: { x: -1, y: -1 },
         maxVelocity: 5,
-        mass: 1,
-        friction: 1,
+        mass: 5,
+        friction: 0.996,
         restitution: 1,
       },
     });
   }
 
   update = (): void => {
-    this.colliders.forEach((it) => {
-      Physics.applyCollision(this, it);
-    });
+    Movement.useFrictionPhysics(this);
 
-    this.sprite.transform.setPosition({
-      x: this.sprite.transform.position.x + this.attributes.velocity.x,
-      y: this.sprite.transform.position.y + this.attributes.velocity.y,
+    this.colliders.forEach((it) => {
+      Movement.useCollisionPhysics(this, it.objectSnapshot);
     });
 
     this.shape.transform.setPosition({

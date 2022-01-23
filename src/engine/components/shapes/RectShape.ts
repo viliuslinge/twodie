@@ -1,8 +1,9 @@
 import { IGameRenderer } from "../../GameRenderer";
+import { ICoord } from "../../shared";
 
 import { Transform, ITransformProperties } from "../Transform";
 
-import { IBaseShape } from "./types";
+import { IBaseShape, IShapeSerialized } from "./types";
 
 export interface IRectShapeProperties {
   width: number;
@@ -31,6 +32,13 @@ export class RectShape implements IBaseShape {
     return this._height * this.transform.scale;
   }
 
+  get centerPosition(): ICoord {
+    return {
+      x: this.transform.position.x + this.width / 2,
+      y: this.transform.position.y + this.height / 2,
+    };
+  }
+
   renderDebug = (
     renderer: IGameRenderer,
     properties: { isColliding: boolean }
@@ -43,5 +51,30 @@ export class RectShape implements IBaseShape {
       this.width,
       this.height
     );
+
+    renderer.beginPath();
+    renderer.arc(
+      this.transform.position.x,
+      this.transform.position.y,
+      3,
+      0,
+      2 * Math.PI
+    );
+    renderer.lineWidth = 1;
+    renderer.strokeStyle = "#000000";
+    renderer.stroke();
+
+    renderer.font = "15px Arial";
+    renderer.fillText(
+      `${this.transform.position.x}, ${this.transform.position.y}`,
+      this.transform.position.x + 10,
+      this.transform.position.y
+    );
+  };
+
+  serialize = (): IShapeSerialized => {
+    return {
+      transform: { ...this.transform },
+    };
   };
 }

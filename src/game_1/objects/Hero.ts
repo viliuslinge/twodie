@@ -2,7 +2,7 @@ import { IGameRenderer } from "engine/GameRenderer";
 import { RectShape } from "engine/components/shapes";
 import { AnimatedSprite } from "engine/components/sprites";
 import { BaseObject } from "engine/components/objects";
-import { Physics } from "engine/Physics";
+import { Movement } from "engine/components/Movement";
 
 import spritePNG from "../../../assets/sprites/sprite.png";
 
@@ -20,10 +20,10 @@ export class Hero extends BaseObject<AnimatedSprite<ISpriteAnimations>> {
   constructor() {
     super({
       shape: new RectShape({
-        width: 32,
-        height: 32,
+        width: 100,
+        height: 50,
         transform: {
-          position: { x: 400, y: 300 },
+          position: { x: 500, y: 150 },
           scale: 1,
         },
       }),
@@ -57,15 +57,15 @@ export class Hero extends BaseObject<AnimatedSprite<ISpriteAnimations>> {
           ],
         },
         transform: {
-          position: { x: 400, y: 300 },
+          position: { x: 700, y: 150 },
           scale: 1,
         },
       }),
       attributes: {
-        velocity: { x: 3, y: 0 },
+        velocity: { x: 1, y: 1 },
         maxVelocity: 5,
         mass: 1,
-        friction: 1,
+        friction: 0.996,
         restitution: 1,
       },
     });
@@ -94,28 +94,28 @@ export class Hero extends BaseObject<AnimatedSprite<ISpriteAnimations>> {
     document.addEventListener("keyup", (e) => {
       switch (e.key) {
         case "ArrowLeft": {
-          if (this.attributes.velocity.x < 0) {
+          if (this.attributes.velocity.x <= 0) {
             this.sprite.setCurrentAnimationID("idleLeft");
             this.stop();
           }
           break;
         }
         case "ArrowRight": {
-          if (this.attributes.velocity.x > 0) {
+          if (this.attributes.velocity.x >= 0) {
             this.sprite.setCurrentAnimationID("idleRight");
             this.stop();
           }
           break;
         }
         case "ArrowUp": {
-          if (this.attributes.velocity.y < 0) {
+          if (this.attributes.velocity.y <= 0) {
             this.sprite.setCurrentAnimationID("idleUp");
             this.stop();
           }
           break;
         }
         case "ArrowDown": {
-          if (this.attributes.velocity.y > 0) {
+          if (this.attributes.velocity.y >= 0) {
             this.sprite.setCurrentAnimationID("idleDown");
             this.stop();
           }
@@ -126,13 +126,10 @@ export class Hero extends BaseObject<AnimatedSprite<ISpriteAnimations>> {
   }
 
   update = (): void => {
-    this.colliders.forEach((it) => {
-      Physics.applyCollision(this, it);
-    });
+    Movement.useFrictionPhysics(this);
 
-    this.sprite.transform.setPosition({
-      x: this.sprite.transform.position.x + this.attributes.velocity.x,
-      y: this.sprite.transform.position.y + this.attributes.velocity.y,
+    this.colliders.forEach((it) => {
+      Movement.useCollisionPhysics(this, it.objectSnapshot);
     });
 
     this.shape.transform.setPosition({

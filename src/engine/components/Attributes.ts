@@ -1,10 +1,7 @@
-interface IVelocity {
-  x: number;
-  y: number;
-}
+import { ICoord } from "../shared";
 
 export interface IAttributesSerialized {
-  velocity: IVelocity;
+  velocity: ICoord;
   maxVelocity: number;
   mass: number;
   friction: number;
@@ -12,7 +9,7 @@ export interface IAttributesSerialized {
 }
 
 export interface IAttributesProperties {
-  velocity: IVelocity;
+  velocity: ICoord;
   maxVelocity: number;
   mass: number;
   friction: number;
@@ -29,7 +26,7 @@ export class Attributes {
   readonly mass: number;
   readonly friction: number;
   readonly restitution: number;
-  velocity: IVelocity;
+  velocity: ICoord;
 
   constructor(properties: IAttributesProperties) {
     this.velocity = properties.velocity;
@@ -39,7 +36,7 @@ export class Attributes {
     this.restitution = properties.restitution;
   }
 
-  setVelocity = (velocity: IVelocity): void => {
+  setVelocity = (velocity: ICoord): void => {
     this.velocity = {
       x: velocity.x,
       y: velocity.y,

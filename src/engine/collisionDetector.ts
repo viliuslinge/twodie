@@ -7,7 +7,7 @@ export const CollisionDetector = {
 
 function detect(objects: BaseObject[]): void {
   for (let idx = 0; idx < objects.length; idx++) {
-    objects[idx].setColliders([]);
+    objects[idx].resetColliders();
   }
 
   for (let idx = 0; idx < objects.length; idx++) {
@@ -18,8 +18,14 @@ function detect(objects: BaseObject[]): void {
       const targetObj = objects[targetIdx];
 
       if (intersects(obj.shape, targetObj.shape)) {
-        obj.setColliders([...obj.colliders, targetObj.serialize()]);
-        targetObj.setColliders([...targetObj.colliders, obj.serialize()]);
+        obj.addCollider({
+          objectRef: targetObj,
+          objectSnapshot: targetObj.serialize(),
+        });
+        targetObj.addCollider({
+          objectRef: obj,
+          objectSnapshot: obj.serialize(),
+        });
       }
     }
   }
@@ -36,29 +42,29 @@ function intersects(s1: ShapeType, s2: ShapeType): boolean {
     if (s2.type === "circle") {
       return circleRect(s2, s1);
     } else {
-      return rectRect(s1, s2);
+      return rectRect(s2, s1);
     }
   }
 }
 
 function circleRect(c: CircleShape, r: RectShape): boolean {
-  let x: number = c.transform.position.x;
-  let y: number = c.transform.position.y;
+  let x: number = c.centerPosition.x;
+  let y: number = c.centerPosition.y;
 
-  if (c.transform.position.x < c.transform.position.y) {
+  if (c.centerPosition.x < r.transform.position.x) {
     x = r.transform.position.x;
-  } else if (c.transform.position.x > r.transform.position.x + r.width) {
+  } else if (c.centerPosition.x > r.transform.position.x + r.width) {
     x = r.transform.position.x + r.width;
   }
 
-  if (c.transform.position.y < r.transform.position.y) {
+  if (c.centerPosition.y < r.transform.position.y) {
     y = r.transform.position.y;
-  } else if (c.transform.position.y > r.transform.position.y + r.height) {
+  } else if (c.centerPosition.y > r.transform.position.y + r.height) {
     y = r.transform.position.y + r.height;
   }
 
-  const distX = c.transform.position.x - x;
-  const distY = c.transform.position.y - y;
+  const distX = c.centerPosition.x - x;
+  const distY = c.centerPosition.y - y;
   const distance = Math.sqrt(distX * distX + distY * distY);
 
   if (distance <= c.radius) {
@@ -70,8 +76,8 @@ function circleRect(c: CircleShape, r: RectShape): boolean {
 
 function circleCircle(c1: CircleShape, c2: CircleShape): boolean {
   const squareDist =
-    Math.pow(c1.transform.position.x - c2.transform.position.x, 2) +
-    Math.pow(c1.transform.position.y - c2.transform.position.y, 2);
+    Math.pow(c1.centerPosition.x - c2.centerPosition.x, 2) +
+    Math.pow(c1.centerPosition.y - c2.centerPosition.y, 2);
 
   if (squareDist <= Math.pow(c1.radius + c2.radius, 2)) {
     return true;

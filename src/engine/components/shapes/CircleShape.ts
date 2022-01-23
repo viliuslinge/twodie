@@ -1,8 +1,9 @@
 import { IGameRenderer } from "../../GameRenderer";
+import { ICoord } from "../../shared";
 
 import { Transform, ITransformProperties } from "../Transform";
 
-import { IBaseShape } from "./types";
+import { IBaseShape, IShapeSerialized } from "./types";
 
 export interface ICircleShapeProperties {
   radius: number;
@@ -24,14 +25,21 @@ export class CircleShape implements IBaseShape {
     return this._radius * this.transform.scale;
   }
 
+  get centerPosition(): ICoord {
+    return {
+      x: this.transform.position.x + this.radius,
+      y: this.transform.position.y + this.radius,
+    };
+  }
+
   renderDebug = (
     renderer: IGameRenderer,
     properties: { isColliding: boolean }
   ): void => {
     renderer.beginPath();
     renderer.arc(
-      this.transform.position.x,
-      this.transform.position.y,
+      this.centerPosition.x,
+      this.centerPosition.y,
       this.radius * this.transform.scale,
       0,
       2 * Math.PI
@@ -39,5 +47,30 @@ export class CircleShape implements IBaseShape {
     renderer.lineWidth = 1;
     renderer.strokeStyle = properties.isColliding ? "#ff0000" : "#00ff43";
     renderer.stroke();
+
+    renderer.beginPath();
+    renderer.arc(
+      this.transform.position.x,
+      this.transform.position.y,
+      3,
+      0,
+      2 * Math.PI
+    );
+    renderer.lineWidth = 1;
+    renderer.strokeStyle = "#000000";
+    renderer.stroke();
+
+    renderer.font = "15px Arial";
+    renderer.fillText(
+      `${this.transform.position.x}, ${this.transform.position.y}`,
+      this.transform.position.x + 10,
+      this.transform.position.y
+    );
+  };
+
+  serialize = (): IShapeSerialized => {
+    return {
+      transform: { ...this.transform },
+    };
   };
 }
