@@ -1,3 +1,3 @@
 # 2D game
 
-No README yet.
+A simple 2d game engine.
