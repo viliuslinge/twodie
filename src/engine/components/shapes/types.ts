@@ -10,6 +10,7 @@ export type ShapeType = RectShape | CircleShape;
 
 export interface IShapeSerialized {
   transform: ITransformProperties;
+  centerPosition: ICoord;
 }
 
 export interface IBaseShape {

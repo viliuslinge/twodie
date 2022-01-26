@@ -7,11 +7,77 @@ import { CircleShape, RectShape, ShapeType } from "./shapes";
  * Utilities that use different algorithms to determine and change velocity
  */
 export const Movement = {
+  boundary,
   block,
   moveToPoint,
   useFrictionPhysics,
   useCollisionPhysics,
 };
+
+function boundary(
+  source: BaseObject,
+  boundary: { position: ICoord; width: number; height: number }
+): void {
+  const { x: velX, y: velY } = source.attributes.velocity;
+  const velocity = {
+    x: velX,
+    y: velY,
+  };
+
+  if (source.shape.type === "rect") {
+    if (source.shape.transform.position.x <= boundary.position.x && velX < 0) {
+      velocity.x = 0;
+    }
+
+    if (
+      source.shape.transform.position.x + source.shape.width >=
+        boundary.position.x + boundary.width &&
+      velX > 0
+    ) {
+      velocity.x = 0;
+    }
+
+    if (source.shape.transform.position.y <= boundary.position.y && velY < 0) {
+      velocity.y = 0;
+    }
+
+    if (
+      source.shape.transform.position.y + source.shape.height >=
+        boundary.position.y + boundary.height &&
+      velY > 0
+    ) {
+      velocity.y = 0;
+    }
+  }
+
+  if (source.shape.type === "circle") {
+    if (source.shape.transform.position.x <= boundary.position.x && velX < 0) {
+      velocity.x = 0;
+    }
+
+    if (
+      source.shape.transform.position.x + source.shape.radius * 2 >=
+        boundary.position.x + boundary.width &&
+      velX > 0
+    ) {
+      velocity.x = 0;
+    }
+
+    if (source.shape.transform.position.y <= boundary.position.y && velY < 0) {
+      velocity.y = 0;
+    }
+
+    if (
+      source.shape.transform.position.y + source.shape.radius * 2 >=
+        boundary.position.y + boundary.height &&
+      velY > 0
+    ) {
+      velocity.y = 0;
+    }
+  }
+
+  source.attributes.setVelocity(velocity);
+}
 
 function block(source: BaseObject, target: BaseObject): void {
   if (source.shape.type === "rect" && target.shape.type === "rect") {
@@ -232,15 +298,15 @@ function useCollisionPhysics(
   target: IBaseObjectSerialized
 ): void {
   const vCollision = {
-    x: target.shape.transform.position.x - source.shape.transform.position.x,
-    y: target.shape.transform.position.y - source.shape.transform.position.y,
+    x: target.shape.centerPosition.x - source.shape.centerPosition.x,
+    y: target.shape.centerPosition.y - source.shape.centerPosition.y,
   };
 
   const distance = Math.sqrt(
-    (target.shape.transform.position.x - source.shape.transform.position.x) *
-      (target.shape.transform.position.x - source.shape.transform.position.x) +
-      (target.shape.transform.position.y - source.shape.transform.position.y) *
-        (target.shape.transform.position.y - source.shape.transform.position.y)
+    (target.shape.centerPosition.x - source.shape.centerPosition.x) *
+      (target.shape.centerPosition.x - source.shape.centerPosition.x) +
+      (target.shape.centerPosition.y - source.shape.centerPosition.y) *
+        (target.shape.centerPosition.y - source.shape.centerPosition.y)
   );
 
   const vCollisionNorm = {

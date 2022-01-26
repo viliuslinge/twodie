@@ -40,7 +40,7 @@ export class CircleShape implements IBaseShape {
     renderer.arc(
       this.centerPosition.x,
       this.centerPosition.y,
-      this.radius * this.transform.scale,
+      this.radius,
       0,
       2 * Math.PI
     );
@@ -60,9 +60,11 @@ export class CircleShape implements IBaseShape {
     renderer.strokeStyle = "#000000";
     renderer.stroke();
 
-    renderer.font = "15px Arial";
+    renderer.font = "13px Arial";
     renderer.fillText(
-      `${this.transform.position.x}, ${this.transform.position.y}`,
+      `${String(this.transform.position.x).slice(0, 6)}, ${String(
+        this.transform.position.y
+      ).slice(0, 6)}`,
       this.transform.position.x + 10,
       this.transform.position.y
     );
@@ -71,6 +73,7 @@ export class CircleShape implements IBaseShape {
   serialize = (): IShapeSerialized => {
     return {
       transform: { ...this.transform },
+      centerPosition: { ...this.centerPosition },
     };
   };
 }

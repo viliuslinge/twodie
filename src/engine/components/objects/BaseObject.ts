@@ -1,5 +1,6 @@
 import { uuid } from "../../lib/uuid";
 import { IGameRenderer } from "../../GameRenderer";
+import { World } from "../../World";
 
 import {
   Attributes,
@@ -9,9 +10,12 @@ import {
 import { ShapeType, IShapeSerialized } from "../shapes";
 import { SpriteType } from "../sprites";
 
-export interface IBaseObjectProperties<T extends SpriteType = SpriteType> {
-  shape: ShapeType;
+export interface IBaseObjectProperties<
+  T extends SpriteType = SpriteType,
+  D extends ShapeType = ShapeType
+> {
   sprite: T;
+  shape: D;
   attributes: IAttributesProperties;
 }
 
@@ -30,14 +34,19 @@ interface ICollider {
   objectSnapshot: IBaseObjectSerialized;
 }
 
-export abstract class BaseObject<T extends SpriteType = SpriteType> {
+export abstract class BaseObject<
+  T extends SpriteType = SpriteType,
+  D extends ShapeType = ShapeType
+> {
   readonly id: string;
   readonly attributes: Attributes;
-  shape: ShapeType;
   sprite: T;
+  shape: D;
   colliders: ICollider[];
+  world: World;
 
-  constructor(properties: IBaseObjectProperties<T>) {
+  constructor(world: World, properties: IBaseObjectProperties<T, D>) {
+    this.world = world;
     this.id = uuid();
     this.shape = properties.shape;
     this.sprite = properties.sprite;
@@ -51,19 +60,19 @@ export abstract class BaseObject<T extends SpriteType = SpriteType> {
     this.sprite.render(renderer);
   }
 
-  renderDebug(renderer: IGameRenderer): void {
+  renderDebug = (renderer: IGameRenderer): void => {
     renderer.beginPath();
     renderer.moveTo(
       this.sprite.transform.position.x,
       this.sprite.transform.position.y
     );
     renderer.lineTo(
-      this.sprite.transform.position.x + this.attributes.velocity.x * 10,
-      this.sprite.transform.position.y + this.attributes.velocity.y * 10
+      this.sprite.transform.position.x + this.attributes.velocity.x * 5,
+      this.sprite.transform.position.y + this.attributes.velocity.y * 5
     );
     renderer.strokeStyle = "black";
     renderer.stroke();
-  }
+  };
 
   serialize = (): IBaseObjectSerialized => {
     return {

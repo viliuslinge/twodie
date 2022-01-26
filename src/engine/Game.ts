@@ -11,10 +11,11 @@ export const DEBUG_MODE: boolean = true;
 
 export class Game {
   private gameLoop: GameLoop;
+  properties: IGameProperties;
   renderer: IGameRenderer;
   world?: World;
 
-  constructor(public properties: IGameProperties) {
+  constructor(properties: IGameProperties) {
     this.properties = properties;
     this.renderer = createGameRenderer(
       this.properties.width,

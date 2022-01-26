@@ -1,14 +1,14 @@
-import { IGameRenderer } from "engine/GameRenderer";
 import { RectShape } from "engine/components/shapes";
 import { Sprite } from "engine/components/sprites";
 import { BaseObject } from "engine/components/objects";
 import { Movement } from "engine/components/Movement";
+import { World } from "engine/World";
 
 import spritePNG from "../../../assets/sprites/sprite.png";
 
 export class Box extends BaseObject<Sprite> {
-  constructor() {
-    super({
+  constructor(world: World) {
+    super(world, {
       shape: new RectShape({
         width: 300,
         height: 500,
@@ -48,8 +48,4 @@ export class Box extends BaseObject<Sprite> {
       y: this.shape.transform.position.y + this.attributes.velocity.y,
     });
   };
-
-  render(renderer: IGameRenderer): void {
-    super.render(renderer);
-  }
 }
