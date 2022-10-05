@@ -3,18 +3,11 @@ import { World } from "engine/World";
 
 import { Airplane } from "./objects/Airplane";
 
-const GAME_WIDTH: number = 1200;
-const GAME_HEIGHT: number = 900;
-
-const game = new Game({
-  width: GAME_WIDTH,
-  height: GAME_HEIGHT,
-});
-
+const game = new Game();
 const world = new World(game);
 const airplane = new Airplane(world, {
   transform: {
-    position: { x: GAME_WIDTH / 2, y: GAME_HEIGHT - 200 },
+    position: { x: game.properties.width / 2, y: game.properties.height - 200 },
     scale: 1,
   },
   attributes: {
@@ -27,7 +20,6 @@ const airplane = new Airplane(world, {
 });
 
 world.addObject(airplane);
-
 game.setWorld(world);
 
 export { game };

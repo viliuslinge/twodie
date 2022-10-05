@@ -1,8 +1,12 @@
 export type IGameRenderer = CanvasRenderingContext2D;
 
+interface IGameRendererProperties {
+  width: number;
+  height: number;
+}
+
 export function createGameRenderer(
-  width: number,
-  height: number
+  input: IGameRendererProperties
 ): IGameRenderer {
   const root = document.getElementById("root");
   if (!root) {
@@ -10,9 +14,8 @@ export function createGameRenderer(
   }
 
   const canvas = document.createElement("canvas");
-  canvas.setAttribute("width", `${width}px`);
-  canvas.setAttribute("height", `${height}px`);
-  canvas.style.border = "1px solid black";
+  canvas.width = input.width;
+  canvas.height = input.height;
 
   root.appendChild(canvas);
 
