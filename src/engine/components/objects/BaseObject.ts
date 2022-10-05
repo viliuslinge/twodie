@@ -70,7 +70,7 @@ export abstract class BaseObject<
       this.sprite.transform.position.x + this.attributes.velocity.x * 5,
       this.sprite.transform.position.y + this.attributes.velocity.y * 5
     );
-    renderer.strokeStyle = "black";
+    renderer.strokeStyle = "#ffffff";
     renderer.stroke();
   };
 

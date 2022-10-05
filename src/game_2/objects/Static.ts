@@ -6,19 +6,19 @@ import { BaseObject } from "engine/components/objects";
 import { Movement } from "engine/components/Movement";
 import { World } from "engine/World";
 
-import spritePNG from "../../../assets/sprites/circle.png";
+import spritePNG from "../../../assets/sprites/sprite.png";
 
-interface IObstacleProperties {
+interface IStaticProperties {
   attributes: IAttributesProperties;
   transform: ITransformProperties;
 }
 
-export class Obstacle extends BaseObject<Sprite> {
-  constructor(world: World, properties: IObstacleProperties) {
+export class Static extends BaseObject<Sprite> {
+  constructor(world: World, properties: IStaticProperties) {
     super(world, {
       attributes: properties.attributes,
       shape: new CircleShape({
-        radius: 15,
+        radius: 16,
         transform: {
           position: {
             x: properties.transform.position.x,
@@ -29,8 +29,8 @@ export class Obstacle extends BaseObject<Sprite> {
       }),
       sprite: new Sprite({
         image: spritePNG,
-        frameHeight: 30,
-        frameWidth: 30,
+        frameHeight: 32,
+        frameWidth: 32,
         transform: {
           position: properties.transform.position,
           scale: properties.transform.scale,
@@ -40,18 +40,6 @@ export class Obstacle extends BaseObject<Sprite> {
   }
 
   update = (): void => {
-    Movement.boundary(
-      {
-        position: { x: 0, y: 0 },
-        width: this.world.game.properties.width,
-        height: this.world.game.properties.height,
-      },
-      this,
-      this.destroy
-    );
-
-    Movement.useFrictionPhysics(this);
-
     this.colliders.forEach((it) => {
       Movement.useCollisionPhysics(this, it.objectSnapshot);
     });
@@ -65,9 +53,5 @@ export class Obstacle extends BaseObject<Sprite> {
       x: this.shape.transform.position.x + this.attributes.velocity.x,
       y: this.shape.transform.position.y + this.attributes.velocity.y,
     });
-  };
-
-  destroy = () => {
-    this.world.removeObject(this.id);
   };
 }

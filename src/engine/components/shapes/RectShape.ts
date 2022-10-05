@@ -44,7 +44,7 @@ export class RectShape implements IBaseShape {
     properties: { isColliding: boolean }
   ): void => {
     renderer.lineWidth = 1;
-    renderer.strokeStyle = properties.isColliding ? "#ff0000" : "#00ff43";
+    renderer.strokeStyle = properties.isColliding ? "#ff0000" : "#ffffff";
     renderer.strokeRect(
       this.transform.position.x,
       this.transform.position.y,
@@ -61,10 +61,11 @@ export class RectShape implements IBaseShape {
       2 * Math.PI
     );
     renderer.lineWidth = 1;
-    renderer.strokeStyle = "#000000";
+    renderer.strokeStyle = "#ffffff";
     renderer.stroke();
 
-    renderer.font = "13px Arial";
+    renderer.font = "10px Arial";
+    renderer.fillStyle = "#ffffff63";
     renderer.fillText(
       `${String(this.transform.position.x).slice(0, 6)}, ${String(
         this.transform.position.y

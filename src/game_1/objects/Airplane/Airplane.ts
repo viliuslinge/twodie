@@ -45,11 +45,14 @@ export class Airplane extends BaseObject<AirplaneSprite, CircleShape> {
   }
 
   update = (): void => {
-    Movement.boundary(this, {
-      position: { x: 0, y: 0 },
-      width: this.world.game.properties.width,
-      height: this.world.game.properties.height,
-    });
+    Movement.boundary(
+      {
+        position: { x: 0, y: 0 },
+        width: this.world.game.properties.width,
+        height: this.world.game.properties.height,
+      },
+      this
+    );
 
     this.sprite.transform.setPosition({
       x: this.sprite.transform.position.x + this.attributes.velocity.x,

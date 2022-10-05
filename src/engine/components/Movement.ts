@@ -15,8 +15,9 @@ export const Movement = {
 };
 
 function boundary(
+  boundary: { position: ICoord; width: number; height: number },
   source: BaseObject,
-  boundary: { position: ICoord; width: number; height: number }
+  cb?: () => void
 ): void {
   const { x: velX, y: velY } = source.attributes.velocity;
   const velocity = {
@@ -74,6 +75,10 @@ function boundary(
     ) {
       velocity.y = 0;
     }
+  }
+
+  if (velX !== velocity.x || velY !== velocity.y) {
+    cb?.();
   }
 
   source.attributes.setVelocity(velocity);

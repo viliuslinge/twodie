@@ -35,7 +35,8 @@ export class World<T extends BaseObject = BaseObject> {
       }
     });
 
-    renderer.font = "50px Arial";
+    renderer.font = "60px Arial";
+    renderer.fillStyle = "#ffffff";
     renderer.fillText(
       String(this.objects.length),
       20,
