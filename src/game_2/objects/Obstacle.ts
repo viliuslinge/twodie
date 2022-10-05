@@ -1,3 +1,5 @@
+import { ITransformProperties } from "engine/components/Transform";
+import { IAttributesProperties } from "engine/components/Attributes";
 import { CircleShape } from "engine/components/shapes";
 import { Sprite } from "engine/components/sprites";
 import { BaseObject } from "engine/components/objects";
@@ -6,14 +8,23 @@ import { World } from "engine/World";
 
 import spritePNG from "../../../assets/sprites/sprite.png";
 
-export class Box extends BaseObject<Sprite> {
-  constructor(world: World) {
+interface IObstacleProperties {
+  attributes: IAttributesProperties;
+  transform: ITransformProperties;
+}
+
+export class Obstacle extends BaseObject<Sprite> {
+  constructor(world: World, properties: IObstacleProperties) {
     super(world, {
+      attributes: properties.attributes,
       shape: new CircleShape({
         radius: 16,
         transform: {
-          position: { x: 600, y: 250 },
-          scale: 1,
+          position: {
+            x: properties.transform.position.x,
+            y: properties.transform.position.y,
+          },
+          scale: properties.transform.scale,
         },
       }),
       sprite: new Sprite({
@@ -21,17 +32,10 @@ export class Box extends BaseObject<Sprite> {
         frameHeight: 32,
         frameWidth: 32,
         transform: {
-          position: { x: 600, y: 250 },
-          scale: 1,
+          position: properties.transform.position,
+          scale: properties.transform.scale,
         },
       }),
-      attributes: {
-        velocity: { x: 0, y: 0 },
-        maxVelocity: 5,
-        mass: 5,
-        friction: 0.996,
-        restitution: 1,
-      },
     });
   }
 
