@@ -1,38 +1,48 @@
 import { ITransformProperties } from "engine/components/Transform";
 import { IAttributesProperties } from "engine/components/Attributes";
 import { RectShape } from "engine/components/shapes";
-import { Sprite } from "engine/components/sprites";
+import { AnimatedSprite } from "engine/components/sprites";
 import { BaseObject } from "engine/components/objects";
 import { World } from "engine/World";
 import { outOfBoundary } from "engine/utils";
 
-import spritePNG from "../../../assets/sprites/sprite.png";
+import spritePNG from "../../../assets/sprites/missle_2.png";
 
 interface IBulletProperties {
   attributes: IAttributesProperties;
   transform: ITransformProperties;
 }
 
-export class Bullet extends BaseObject<Sprite, RectShape> {
+const FRAME_WIDTH = 51;
+const FRAME_HEIGHT = 75;
+const TOTAL_FRAME_COUNT = 15;
+
+export class Bullet extends BaseObject<AnimatedSprite<"rotate">, RectShape> {
   constructor(world: World, properties: IBulletProperties) {
     super(world, {
       attributes: properties.attributes,
       shape: new RectShape({
-        width: 32,
-        height: 32,
+        width: FRAME_WIDTH,
+        height: FRAME_HEIGHT,
         transform: {
           position: properties.transform.position,
           scale: properties.transform.scale,
         },
       }),
-      sprite: new Sprite({
+      sprite: new AnimatedSprite<"rotate">({
         image: spritePNG,
-        frameHeight: 32,
-        frameWidth: 32,
-        transform: {
-          position: properties.transform.position,
-          scale: properties.transform.scale,
+        animationDuration: 2,
+        frameHeight: FRAME_HEIGHT,
+        frameWidth: FRAME_WIDTH,
+        currentAnimationID: "rotate",
+        currentAnimationFrameIdx: 0,
+        animations: {
+          rotate: Array.from(Array(TOTAL_FRAME_COUNT - 1).keys()).map((idx) => [
+            FRAME_WIDTH * (idx + 1),
+            0,
+          ]),
         },
+        transform: properties.transform,
       }),
     });
   }

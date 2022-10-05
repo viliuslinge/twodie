@@ -25,14 +25,6 @@ export class AirplaneKeyboardHandler implements IKeyboardHandler {
         this.object.moveRight();
         break;
       }
-      case "ArrowUp": {
-        this.object.moveUp();
-        break;
-      }
-      case "ArrowDown": {
-        this.object.moveDown();
-        break;
-      }
       case " ": {
         this.object.shot();
         break;
@@ -48,14 +40,6 @@ export class AirplaneKeyboardHandler implements IKeyboardHandler {
       }
       case "ArrowRight": {
         this.object.stopRight();
-        break;
-      }
-      case "ArrowUp": {
-        this.object.stopUp();
-        break;
-      }
-      case "ArrowDown": {
-        this.object.stopDown();
         break;
       }
     }

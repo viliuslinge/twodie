@@ -14,7 +14,7 @@ const game = new Game({
 const world = new World(game);
 const airplane = new Airplane(world, {
   transform: {
-    position: { x: 550, y: 300 },
+    position: { x: GAME_WIDTH / 2, y: GAME_HEIGHT - 200 },
     scale: 1,
   },
   attributes: {

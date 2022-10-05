@@ -7,7 +7,7 @@ interface IGameProperties {
   height: number;
 }
 
-export const DEBUG_MODE: boolean = true;
+export const DEBUG_MODE: boolean = false;
 
 export class Game {
   private gameLoop: GameLoop;

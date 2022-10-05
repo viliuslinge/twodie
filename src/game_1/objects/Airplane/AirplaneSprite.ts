@@ -1,52 +1,36 @@
 import { AnimatedSprite } from "engine/components/sprites";
 import { ITransformProperties } from "engine/components/Transform";
 
-import spritePNG from "../../../../assets/sprites/sprite.png";
+import spritePNG from "../../../../assets/sprites/airplane_1_v1.png";
 
-type IAnimations =
-  | "idle-up"
-  | "idle-down"
-  | "idle-left"
-  | "idle-right"
-  | "walk-up"
-  | "walk-down"
-  | "walk-left"
-  | "walk-right";
+type IAnimations = "left" | "right" | "straight";
 
 interface IAirplaneSpriteProperties {
   transform: ITransformProperties;
+}
+
+const FRAME_WIDTH = 253;
+const FRAME_HEIGHT = 206;
+
+function genArray(length: number): number[] {
+  return Array.from(Array(length).keys());
 }
 
 export class AirplaneSprite extends AnimatedSprite<IAnimations> {
   constructor(properties: IAirplaneSpriteProperties) {
     super({
       image: spritePNG,
-      animationDuration: 16,
-      frameHeight: 32,
-      frameWidth: 32,
-      currentAnimationID: "idle-down",
+      animationDuration: 1,
+      frameHeight: FRAME_HEIGHT,
+      frameWidth: FRAME_WIDTH,
+      currentAnimationID: "straight",
       currentAnimationFrameIdx: 0,
       animations: {
-        "idle-down": [[32, 0]],
-        "idle-left": [[32, 32]],
-        "idle-right": [[32, 64]],
-        "idle-up": [[32, 96]],
-        "walk-down": [
-          [0, 0],
-          [64, 0],
-        ],
-        "walk-left": [
-          [0, 32],
-          [64, 32],
-        ],
-        "walk-right": [
-          [0, 64],
-          [64, 64],
-        ],
-        "walk-up": [
-          [0, 96],
-          [64, 96],
-        ],
+        // left: genArray(12).map((idx) => [FRAME_WIDTH * (idx + 1), 0]),
+        // right: genArray(12).map((idx) => [FRAME_WIDTH * (idx + 14), 0]),
+        left: [[FRAME_WIDTH, 0]],
+        right: [[FRAME_WIDTH * 25, 0]],
+        straight: [[FRAME_WIDTH * 13, 0]],
       },
       transform: properties.transform,
     });

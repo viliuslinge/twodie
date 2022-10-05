@@ -5,7 +5,7 @@ import { BaseObject } from "engine/components/objects";
 import { Movement } from "engine/components/Movement";
 import { World } from "engine/World";
 
-import { IKeyboardHandler } from "../..//KeyboardHandler";
+import { IKeyboardHandler } from "../../KeyboardHandler";
 
 import { Bullet } from "../Bullet";
 
@@ -24,16 +24,19 @@ export class Airplane extends BaseObject<AirplaneSprite, CircleShape> {
     super(world, {
       attributes: properties.attributes,
       shape: new CircleShape({
-        radius: 16,
+        radius: 60,
         transform: {
-          position: properties.transform.position,
-          scale: properties.transform.scale * 4,
+          position: {
+            x: properties.transform.position.x + 28,
+            y: properties.transform.position.y + 10,
+          },
+          scale: properties.transform.scale,
         },
       }),
       sprite: new AirplaneSprite({
         transform: {
           position: properties.transform.position,
-          scale: properties.transform.scale * 4,
+          scale: properties.transform.scale * 0.7,
         },
       }),
     });
@@ -64,11 +67,14 @@ export class Airplane extends BaseObject<AirplaneSprite, CircleShape> {
     this.world.addObject(
       new Bullet(this.world, {
         transform: {
-          position: this.shape.transform.position,
-          scale: 1,
+          position: {
+            x: this.shape.transform.position.x + 6,
+            y: this.shape.transform.position.y,
+          },
+          scale: 0.4,
         },
         attributes: {
-          velocity: { x: 0, y: -30 },
+          velocity: { x: 0, y: -6 },
           maxVelocity: 15,
           mass: 1,
           friction: 0.996,
@@ -81,13 +87,51 @@ export class Airplane extends BaseObject<AirplaneSprite, CircleShape> {
       new Bullet(this.world, {
         transform: {
           position: {
-            x: this.shape.transform.position.x + this.shape.radius * 2,
-            y: this.shape.transform.position.y,
+            x: this.shape.transform.position.x + 28,
+            y: this.shape.transform.position.y - 10,
           },
-          scale: 1,
+          scale: 0.4,
         },
         attributes: {
-          velocity: { x: 0, y: -30 },
+          velocity: { x: 0, y: -10 },
+          maxVelocity: 15,
+          mass: 1,
+          friction: 0.996,
+          restitution: 1,
+        },
+      })
+    );
+
+    this.world.addObject(
+      new Bullet(this.world, {
+        transform: {
+          position: {
+            x: this.shape.transform.position.x + 6 + 64,
+            y: this.shape.transform.position.y - 10,
+          },
+          scale: 0.4,
+        },
+        attributes: {
+          velocity: { x: 0, y: -10 },
+          maxVelocity: 15,
+          mass: 1,
+          friction: 0.996,
+          restitution: 1,
+        },
+      })
+    );
+
+    this.world.addObject(
+      new Bullet(this.world, {
+        transform: {
+          position: {
+            x: this.shape.transform.position.x + 28 + 64,
+            y: this.shape.transform.position.y,
+          },
+          scale: 0.4,
+        },
+        attributes: {
+          velocity: { x: 0, y: -6 },
           maxVelocity: 15,
           mass: 1,
           friction: 0.996,
@@ -98,7 +142,7 @@ export class Airplane extends BaseObject<AirplaneSprite, CircleShape> {
   };
 
   moveLeft = (): void => {
-    this.sprite.setCurrentAnimationID("walk-left");
+    this.sprite.setCurrentAnimationID("left");
     this.attributes.setVelocity({
       x: -this.attributes.maxVelocity,
       y: this.attributes.velocity.y,
@@ -106,56 +150,56 @@ export class Airplane extends BaseObject<AirplaneSprite, CircleShape> {
   };
 
   moveRight = (): void => {
-    this.sprite.setCurrentAnimationID("walk-right");
+    this.sprite.setCurrentAnimationID("right");
     this.attributes.setVelocity({
       x: this.attributes.maxVelocity,
       y: this.attributes.velocity.y,
     });
   };
 
-  moveUp = (): void => {
-    this.sprite.setCurrentAnimationID("walk-up");
-    this.attributes.setVelocity({
-      x: this.attributes.velocity.x,
-      y: -this.attributes.maxVelocity,
-    });
-  };
+  // moveUp = (): void => {
+  //   this.sprite.setCurrentAnimationID("walk-up");
+  //   this.attributes.setVelocity({
+  //     x: this.attributes.velocity.x,
+  //     y: -this.attributes.maxVelocity,
+  //   });
+  // };
 
-  moveDown = (): void => {
-    this.sprite.setCurrentAnimationID("walk-down");
-    this.attributes.setVelocity({
-      x: this.attributes.velocity.x,
-      y: this.attributes.maxVelocity,
-    });
-  };
+  // moveDown = (): void => {
+  //   this.sprite.setCurrentAnimationID("walk-down");
+  //   this.attributes.setVelocity({
+  //     x: this.attributes.velocity.x,
+  //     y: this.attributes.maxVelocity,
+  //   });
+  // };
 
   stopLeft = (): void => {
     if (this.attributes.velocity.x <= 0) {
-      this.sprite.setCurrentAnimationID("idle-left");
+      this.sprite.setCurrentAnimationID("straight");
       this.stop();
     }
   };
 
   stopRight = (): void => {
     if (this.attributes.velocity.x >= 0) {
-      this.sprite.setCurrentAnimationID("idle-right");
+      this.sprite.setCurrentAnimationID("straight");
       this.stop();
     }
   };
 
-  stopUp = (): void => {
-    if (this.attributes.velocity.y <= 0) {
-      this.sprite.setCurrentAnimationID("idle-up");
-      this.stop();
-    }
-  };
+  // stopUp = (): void => {
+  //   if (this.attributes.velocity.y <= 0) {
+  //     this.sprite.setCurrentAnimationID("idle-up");
+  //     this.stop();
+  //   }
+  // };
 
-  stopDown = (): void => {
-    if (this.attributes.velocity.y >= 0) {
-      this.sprite.setCurrentAnimationID("idle-down");
-      this.stop();
-    }
-  };
+  // stopDown = (): void => {
+  //   if (this.attributes.velocity.y >= 0) {
+  //     this.sprite.setCurrentAnimationID("idle-down");
+  //     this.stop();
+  //   }
+  // };
 
   stop = (): void => {
     this.attributes.setVelocity({
