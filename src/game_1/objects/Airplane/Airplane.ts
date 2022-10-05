@@ -4,8 +4,7 @@ import { CircleShape } from "engine/components/shapes";
 import { BaseObject } from "engine/components/objects";
 import { Movement } from "engine/components/Movement";
 import { World } from "engine/World";
-
-import { IKeyboardHandler } from "../../KeyboardHandler";
+import { IKeyboardHandler } from "engine/KeyboardHandler";
 
 import { Bullet } from "../Bullet";
 

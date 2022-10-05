@@ -1,4 +1,4 @@
-import { IKeyboardHandler } from "../../KeyboardHandler";
+import { IKeyboardHandler } from "engine/KeyboardHandler";
 
 import { Airplane } from "./Airplane";
 
