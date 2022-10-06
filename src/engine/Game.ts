@@ -2,8 +2,6 @@ import { GameRenderer } from "./GameRenderer";
 import { GameLoop } from "./GameLoop";
 import { World } from "./World";
 
-import "./index.css";
-
 interface IGameProperties {
   rootElementID: string;
 }
