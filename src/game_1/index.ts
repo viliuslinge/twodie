@@ -3,6 +3,8 @@ import { World } from "engine/World";
 
 import { Airplane } from "./objects/Airplane";
 
+import "./index.css";
+
 const game = new Game({ rootElementID: "root" });
 const world = new World(game);
 const airplane = new Airplane(world, {
@@ -24,5 +26,21 @@ const airplane = new Airplane(world, {
 
 world.addObject(airplane);
 game.setWorld(world);
+
+function renderButton() {
+  const root = document.getElementById("root");
+  if (!root) return;
+
+  const button = document.createElement("button");
+  button.classList.add("debugToggle");
+  button.innerText = "TOGGLE DEBUGGER";
+  button.onclick = () => {
+    game.setDebugMode(!game.isDebugMode);
+  };
+
+  root.appendChild(button);
+}
+
+renderButton();
 
 export { game };

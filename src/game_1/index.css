@@ -1,0 +1,18 @@
+body {
+  margin: 0px;
+  padding: 0px;
+  overflow: hidden;
+  background-color: black;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+}
+
+.debugToggle {
+  position: absolute;
+  z-index: 5;
+  bottom: 0;
+  right: 0;
+}
