@@ -2,7 +2,7 @@ import { Game } from "engine/Game";
 import { World } from "engine/World";
 
 import { Hero } from "./objects/Hero";
-import { Obstacle } from "./objects/Obstacle";
+import { Ball } from "./objects/Obstacle";
 import { genArray, getRandomCoord } from "./utils";
 
 import "./index.css";
@@ -30,7 +30,7 @@ world.addObject(hero);
 
 genArray(2000).forEach(() => {
   world.addObject(
-    new Obstacle(world, {
+    new Ball(world, {
       transform: {
         position: getRandomCoord({
           maxX: game.renderer.screenWidth,

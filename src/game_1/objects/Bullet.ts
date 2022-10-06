@@ -6,7 +6,7 @@ import { BaseObject } from "engine/components/objects";
 import { World } from "engine/World";
 import { outOfBoundary } from "engine/utils";
 
-import spritePNG from "../../../assets/sprites/missle_2.png";
+import spritePNG from "../assets/missle.png";
 
 interface IBulletProperties {
   attributes: IAttributesProperties;

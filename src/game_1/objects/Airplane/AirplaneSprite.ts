@@ -1,7 +1,7 @@
 import { AnimatedSprite } from "engine/components/sprites";
 import { ITransformProperties } from "engine/components/Transform";
 
-import spritePNG from "../../../../assets/sprites/airplane_1_v1.png";
+import spritePNG from "../../assets/airplane.png";
 
 type IAnimations = "left" | "right" | "straight";
 

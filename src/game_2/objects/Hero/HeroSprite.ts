@@ -1,7 +1,7 @@
 import { AnimatedSprite } from "engine/components/sprites";
 import { ITransformProperties } from "engine/components/Transform";
 
-import spritePNG from "../../../../assets/sprites/sprite.png";
+import spritePNG from "../../assets/hero.png";
 
 type IAnimations =
   | "idle-up"

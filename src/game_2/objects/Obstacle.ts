@@ -6,15 +6,15 @@ import { BaseObject } from "engine/components/objects";
 import { Movement } from "engine/components/Movement";
 import { World } from "engine/World";
 
-import spritePNG from "../../../assets/sprites/circle.png";
+import spritePNG from "../assets/ball.png";
 
-interface IObstacleProperties {
+interface IBallProperties {
   attributes: IAttributesProperties;
   transform: ITransformProperties;
 }
 
-export class Obstacle extends BaseObject<Sprite> {
-  constructor(world: World, properties: IObstacleProperties) {
+export class Ball extends BaseObject<Sprite> {
+  constructor(world: World, properties: IBallProperties) {
     super(world, {
       attributes: properties.attributes,
       shape: new CircleShape({
