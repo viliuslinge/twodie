@@ -7,13 +7,13 @@ import { genArray, getRandomCoord } from "./utils";
 
 import "./index.css";
 
-const game = new Game();
+const game = new Game({ rootElementID: "root" });
 const world = new World(game);
 const hero = new Hero(world, {
   transform: {
     position: {
-      x: game.properties.width / 2 - 64,
-      y: game.properties.height / 2 - 64,
+      x: game.renderer.screenWidth / 2 - 64,
+      y: game.renderer.screenHeight / 2 - 64,
     },
     scale: 3,
   },
@@ -33,8 +33,8 @@ genArray(2000).forEach(() => {
     new Obstacle(world, {
       transform: {
         position: getRandomCoord({
-          maxX: game.properties.width,
-          maxY: game.properties.height,
+          maxX: game.renderer.screenWidth,
+          maxY: game.renderer.screenHeight,
           except: {
             x: hero.shape.centerPosition.x - hero.shape.radius - 50,
             y: hero.shape.centerPosition.y - hero.shape.radius - 50,

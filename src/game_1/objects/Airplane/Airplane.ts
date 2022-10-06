@@ -48,8 +48,8 @@ export class Airplane extends BaseObject<AirplaneSprite, CircleShape> {
     Movement.boundary(
       {
         position: { x: 0, y: 0 },
-        width: this.world.game.properties.width,
-        height: this.world.game.properties.height,
+        width: this.world.game.renderer.screenWidth,
+        height: this.world.game.renderer.screenHeight,
       },
       this
     );
@@ -159,22 +159,6 @@ export class Airplane extends BaseObject<AirplaneSprite, CircleShape> {
     });
   };
 
-  // moveUp = (): void => {
-  //   this.sprite.setCurrentAnimationID("walk-up");
-  //   this.attributes.setVelocity({
-  //     x: this.attributes.velocity.x,
-  //     y: -this.attributes.maxVelocity,
-  //   });
-  // };
-
-  // moveDown = (): void => {
-  //   this.sprite.setCurrentAnimationID("walk-down");
-  //   this.attributes.setVelocity({
-  //     x: this.attributes.velocity.x,
-  //     y: this.attributes.maxVelocity,
-  //   });
-  // };
-
   stopLeft = (): void => {
     if (this.attributes.velocity.x <= 0) {
       this.sprite.setCurrentAnimationID("straight");
@@ -188,20 +172,6 @@ export class Airplane extends BaseObject<AirplaneSprite, CircleShape> {
       this.stop();
     }
   };
-
-  // stopUp = (): void => {
-  //   if (this.attributes.velocity.y <= 0) {
-  //     this.sprite.setCurrentAnimationID("idle-up");
-  //     this.stop();
-  //   }
-  // };
-
-  // stopDown = (): void => {
-  //   if (this.attributes.velocity.y >= 0) {
-  //     this.sprite.setCurrentAnimationID("idle-down");
-  //     this.stop();
-  //   }
-  // };
 
   stop = (): void => {
     this.attributes.setVelocity({

@@ -1,4 +1,4 @@
-import { IGameRenderer } from "../../GameRenderer";
+import { GameRenderer } from "../../GameRenderer";
 
 import { Sprite, ISpriteProperties } from "./Sprite";
 
@@ -45,13 +45,13 @@ export class AnimatedSprite<T extends string = string> extends Sprite {
     }
   };
 
-  render = (renderer: IGameRenderer): void => {
+  render = (renderer: GameRenderer): void => {
     this.updateAnimationProgress();
 
     if (this.currentFrameCoordinates) {
       const [x, y] = this.currentFrameCoordinates;
 
-      renderer.drawImage(
+      renderer.api.drawImage(
         this.image,
         x,
         y,

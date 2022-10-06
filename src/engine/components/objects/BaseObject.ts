@@ -1,5 +1,5 @@
 import { uuid } from "../../lib/uuid";
-import { IGameRenderer } from "../../GameRenderer";
+import { GameRenderer } from "../../GameRenderer";
 import { World } from "../../World";
 
 import {
@@ -56,7 +56,7 @@ export abstract class BaseObject<
 
   abstract update(): void;
 
-  render(renderer: IGameRenderer): void {
+  render(renderer: GameRenderer): void {
     this.sprite.render(renderer);
   }
 

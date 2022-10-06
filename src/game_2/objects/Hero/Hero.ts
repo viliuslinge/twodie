@@ -46,8 +46,8 @@ export class Hero extends BaseObject<HeroSprite, CircleShape> {
     Movement.boundary(
       {
         position: { x: 0, y: 0 },
-        width: this.world.game.properties.width,
-        height: this.world.game.properties.height,
+        width: this.world.game.renderer.screenWidth,
+        height: this.world.game.renderer.screenHeight,
       },
       this
     );

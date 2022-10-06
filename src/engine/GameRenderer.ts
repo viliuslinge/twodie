@@ -1,28 +1,37 @@
-export type IGameRenderer = CanvasRenderingContext2D;
-
 interface IGameRendererProperties {
-  width: number;
-  height: number;
+  rootElementID: string;
 }
 
-export function createGameRenderer(
-  input: IGameRendererProperties
-): IGameRenderer {
-  const root = document.getElementById("root");
-  if (!root) {
-    throw new Error("Missing root element");
+export class GameRenderer {
+  private canvas: HTMLCanvasElement;
+  api: CanvasRenderingContext2D;
+
+  constructor(properties: IGameRendererProperties) {
+    const root = document.getElementById(properties.rootElementID);
+    if (!root) {
+      throw new Error("Missing root element");
+    }
+
+    const canvas = document.createElement("canvas");
+    canvas.width = root.clientWidth;
+    canvas.height = root.clientHeight;
+
+    root.appendChild(canvas);
+
+    const api = canvas.getContext("2d");
+    if (!api) {
+      throw new Error("Missing canvas element");
+    }
+
+    this.canvas = canvas;
+    this.api = api;
   }
 
-  const canvas = document.createElement("canvas");
-  canvas.width = input.width;
-  canvas.height = input.height;
-
-  root.appendChild(canvas);
-
-  const ctx = canvas.getContext("2d");
-  if (!ctx) {
-    throw new Error("Missing canvas element");
+  get screenWidth(): number {
+    return this.canvas.clientWidth;
   }
 
-  return ctx;
+  get screenHeight(): number {
+    return this.canvas.clientHeight;
+  }
 }

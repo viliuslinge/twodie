@@ -1,36 +1,29 @@
-import { createGameRenderer, IGameRenderer } from "./GameRenderer";
+import { GameRenderer } from "./GameRenderer";
 import { GameLoop } from "./GameLoop";
 import { World } from "./World";
 
 import "./index.css";
 
 interface IGameProperties {
-  width: number;
-  height: number;
+  rootElementID: string;
 }
 
 export class Game {
-  private gameLoop: GameLoop;
-  properties: IGameProperties;
-  renderer: IGameRenderer;
+  private loop: GameLoop;
+  renderer: GameRenderer;
   world?: World;
   isDebugMode: boolean;
 
-  constructor(properties?: Partial<IGameProperties>) {
-    this.properties = {
-      width: properties?.width ?? window.innerWidth,
-      height: properties?.height ?? window.innerHeight,
-    };
-    this.renderer = createGameRenderer({
-      width: this.properties.width,
-      height: this.properties.height,
+  constructor(properties: IGameProperties) {
+    this.renderer = new GameRenderer({
+      rootElementID: properties.rootElementID,
     });
-    this.gameLoop = new GameLoop(this);
+    this.loop = new GameLoop(this);
     this.isDebugMode = false;
   }
 
   start = (): void => {
-    requestAnimationFrame(this.gameLoop.start);
+    requestAnimationFrame(this.loop.start);
   };
 
   stop = (): void => {

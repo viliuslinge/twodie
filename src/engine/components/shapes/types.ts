@@ -1,4 +1,3 @@
-import { IGameRenderer } from "../../GameRenderer";
 import { ICoord } from "../../shared";
 
 import { Transform, ITransformProperties } from "../Transform";

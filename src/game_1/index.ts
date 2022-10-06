@@ -3,11 +3,14 @@ import { World } from "engine/World";
 
 import { Airplane } from "./objects/Airplane";
 
-const game = new Game();
+const game = new Game({ rootElementID: "root" });
 const world = new World(game);
 const airplane = new Airplane(world, {
   transform: {
-    position: { x: game.properties.width / 2, y: game.properties.height - 200 },
+    position: {
+      x: game.renderer.screenWidth / 2,
+      y: game.renderer.screenHeight - 200,
+    },
     scale: 1,
   },
   attributes: {

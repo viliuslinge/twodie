@@ -1,42 +1,42 @@
 import { BaseObject } from "./components/objects";
-import { IGameRenderer } from "./GameRenderer";
+import { GameRenderer } from "./GameRenderer";
 
-export function renderDebugger(renderer: IGameRenderer, object: BaseObject) {
+export function renderDebugger(renderer: GameRenderer, object: BaseObject) {
   renderPositionDebugger(renderer, object);
   renderVelocityDebugger(renderer, object);
   renderShapeDebugger(renderer, object);
 }
 
-function renderVelocityDebugger(renderer: IGameRenderer, object: BaseObject) {
-  renderer.beginPath();
-  renderer.moveTo(
+function renderVelocityDebugger(renderer: GameRenderer, object: BaseObject) {
+  renderer.api.beginPath();
+  renderer.api.moveTo(
     object.shape.transform.position.x,
     object.shape.transform.position.y
   );
-  renderer.lineTo(
+  renderer.api.lineTo(
     object.shape.transform.position.x + object.attributes.velocity.x * 5,
     object.shape.transform.position.y + object.attributes.velocity.y * 5
   );
-  renderer.strokeStyle = "white";
-  renderer.stroke();
+  renderer.api.strokeStyle = "white";
+  renderer.api.stroke();
 }
 
-function renderPositionDebugger(renderer: IGameRenderer, object: BaseObject) {
-  renderer.beginPath();
-  renderer.arc(
+function renderPositionDebugger(renderer: GameRenderer, object: BaseObject) {
+  renderer.api.beginPath();
+  renderer.api.arc(
     object.shape.transform.position.x,
     object.shape.transform.position.y,
     3,
     0,
     2 * Math.PI
   );
-  renderer.lineWidth = 1;
-  renderer.strokeStyle = "white";
-  renderer.stroke();
+  renderer.api.lineWidth = 1;
+  renderer.api.strokeStyle = "white";
+  renderer.api.stroke();
 
-  renderer.font = "10px Arial";
-  renderer.fillStyle = "#ffffff63";
-  renderer.fillText(
+  renderer.api.font = "10px Arial";
+  renderer.api.fillStyle = "#ffffff63";
+  renderer.api.fillText(
     `${String(object.shape.transform.position.x).slice(0, 6)}, ${String(
       object.shape.transform.position.y
     ).slice(0, 6)}`,
@@ -45,27 +45,27 @@ function renderPositionDebugger(renderer: IGameRenderer, object: BaseObject) {
   );
 }
 
-function renderShapeDebugger(renderer: IGameRenderer, object: BaseObject) {
+function renderShapeDebugger(renderer: GameRenderer, object: BaseObject) {
   switch (object.shape.type) {
     case "circle": {
-      renderer.beginPath();
-      renderer.arc(
+      renderer.api.beginPath();
+      renderer.api.arc(
         object.shape.centerPosition.x,
         object.shape.centerPosition.y,
         object.shape.radius,
         0,
         2 * Math.PI
       );
-      renderer.lineWidth = 1;
-      renderer.strokeStyle = object.isColliding ? "#ff0000" : "white";
-      renderer.stroke();
+      renderer.api.lineWidth = 1;
+      renderer.api.strokeStyle = object.isColliding ? "#ff0000" : "white";
+      renderer.api.stroke();
 
       break;
     }
     case "rect": {
-      renderer.lineWidth = 1;
-      renderer.strokeStyle = object.isColliding ? "#ff0000" : "white";
-      renderer.strokeRect(
+      renderer.api.lineWidth = 1;
+      renderer.api.strokeStyle = object.isColliding ? "#ff0000" : "white";
+      renderer.api.strokeRect(
         object.shape.transform.position.x,
         object.shape.transform.position.y,
         object.shape.width,

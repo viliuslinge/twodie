@@ -26,8 +26,6 @@ export class AirplaneSprite extends AnimatedSprite<IAnimations> {
       currentAnimationID: "straight",
       currentAnimationFrameIdx: 0,
       animations: {
-        // left: genArray(12).map((idx) => [FRAME_WIDTH * (idx + 1), 0]),
-        // right: genArray(12).map((idx) => [FRAME_WIDTH * (idx + 14), 0]),
         left: [[FRAME_WIDTH, 0]],
         right: [[FRAME_WIDTH * 25, 0]],
         straight: [[FRAME_WIDTH * 13, 0]],

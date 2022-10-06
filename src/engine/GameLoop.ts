@@ -4,14 +4,14 @@ export class GameLoop {
   constructor(private game: Game) {}
 
   start = (): void => {
-    const { renderer, world, properties } = this.game;
+    const { renderer, world } = this.game;
 
     if (!world) {
       console.error("World is missing");
       return;
     }
 
-    renderer.clearRect(0, 0, properties.width, properties.height);
+    renderer.api.clearRect(0, 0, renderer.screenWidth, renderer.screenHeight);
     world.update();
     world.render(renderer);
 

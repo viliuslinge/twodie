@@ -1,5 +1,5 @@
 import { BaseObject } from "./components/objects";
-import { IGameRenderer } from "./GameRenderer";
+import { GameRenderer } from "./GameRenderer";
 import { CollisionDetector } from "./CollisionDetector";
 import { Game } from "./Game";
 import { renderDebugger } from "./DebuggerRenderer";
@@ -26,7 +26,7 @@ export class World<T extends BaseObject = BaseObject> {
     CollisionDetector.detect(this.objects);
   };
 
-  render = (renderer: IGameRenderer): void => {
+  render = (renderer: GameRenderer): void => {
     this.objects.forEach((it) => {
       it.render(renderer);
 

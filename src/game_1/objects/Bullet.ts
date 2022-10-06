@@ -51,8 +51,8 @@ export class Bullet extends BaseObject<AnimatedSprite<"rotate">, RectShape> {
     if (
       outOfBoundary(this, {
         position: { x: 0, y: 0 },
-        width: this.world.game.properties.width,
-        height: this.world.game.properties.height,
+        width: this.world.game.renderer.screenWidth,
+        height: this.world.game.renderer.screenHeight,
       })
     ) {
       this.world.removeObject(this.id);

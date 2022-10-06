@@ -1,4 +1,4 @@
-import { IGameRenderer } from "../../GameRenderer";
+import { GameRenderer } from "../../GameRenderer";
 
 import { Transform, ITransformProperties } from "../Transform";
 
@@ -23,8 +23,8 @@ export class Sprite {
     this.transform = new Transform(properties.transform);
   }
 
-  render = (renderer: IGameRenderer): void => {
-    renderer.drawImage(
+  render = (renderer: GameRenderer): void => {
+    renderer.api.drawImage(
       this.image,
       0,
       0,
