@@ -15,10 +15,12 @@ export class World<T extends BaseObject = BaseObject> {
 
   addObject = (object: T): void => {
     this._objects.set(object.id, object);
+    this.fireObjectCountChangedEvent();
   };
 
   removeObject = (id: string): void => {
     this._objects.delete(id);
+    this.fireObjectCountChangedEvent();
   };
 
   update = (): void => {
@@ -39,4 +41,10 @@ export class World<T extends BaseObject = BaseObject> {
   get objects(): T[] {
     return Array.from(this._objects.values());
   }
+
+  private fireObjectCountChangedEvent = () => {
+    this.game.events.fire("object-count-changed", {
+      count: this.objects.length,
+    });
+  };
 }

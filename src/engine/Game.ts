@@ -1,6 +1,8 @@
 import { GameRenderer } from "./GameRenderer";
 import { GameLoop } from "./GameLoop";
 import { World } from "./World";
+import { EventObserver } from "./EventObserver";
+import { IGameEvents } from "./types";
 
 interface IGameProperties {
   rootElementID: string;
@@ -8,15 +10,17 @@ interface IGameProperties {
 
 export class Game {
   private loop: GameLoop;
+  events: EventObserver<IGameEvents>;
   renderer: GameRenderer;
   world?: World;
   isDebugMode: boolean;
 
   constructor(properties: IGameProperties) {
+    this.events = new EventObserver();
+    this.loop = new GameLoop(this);
     this.renderer = new GameRenderer({
       rootElementID: properties.rootElementID,
     });
-    this.loop = new GameLoop(this);
     this.isDebugMode = false;
   }
 

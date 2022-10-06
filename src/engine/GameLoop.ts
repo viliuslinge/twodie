@@ -7,8 +7,7 @@ export class GameLoop {
     const { renderer, world } = this.game;
 
     if (!world) {
-      console.error("World is missing");
-      return;
+      throw new Error("World is missing");
     }
 
     renderer.api.clearRect(0, 0, renderer.screenWidth, renderer.screenHeight);
