@@ -60,20 +60,6 @@ export abstract class BaseObject<
     this.sprite.render(renderer);
   }
 
-  renderDebug = (renderer: IGameRenderer): void => {
-    renderer.beginPath();
-    renderer.moveTo(
-      this.sprite.transform.position.x,
-      this.sprite.transform.position.y
-    );
-    renderer.lineTo(
-      this.sprite.transform.position.x + this.attributes.velocity.x * 5,
-      this.sprite.transform.position.y + this.attributes.velocity.y * 5
-    );
-    renderer.strokeStyle = "#ffffff";
-    renderer.stroke();
-  };
-
   serialize = (): IBaseObjectSerialized => {
     return {
       id: this.id,

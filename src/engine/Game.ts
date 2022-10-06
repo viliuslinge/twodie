@@ -9,13 +9,12 @@ interface IGameProperties {
   height: number;
 }
 
-export const DEBUG_MODE: boolean = true;
-
 export class Game {
   private gameLoop: GameLoop;
   properties: IGameProperties;
   renderer: IGameRenderer;
   world?: World;
+  isDebugMode: boolean;
 
   constructor(properties?: Partial<IGameProperties>) {
     this.properties = {
@@ -27,6 +26,7 @@ export class Game {
       height: this.properties.height,
     });
     this.gameLoop = new GameLoop(this);
+    this.isDebugMode = false;
   }
 
   start = (): void => {
@@ -39,5 +39,9 @@ export class Game {
 
   setWorld = (world: World): void => {
     this.world = world;
+  };
+
+  setDebugMode = (value: boolean): void => {
+    this.isDebugMode = value;
   };
 }

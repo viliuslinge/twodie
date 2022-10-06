@@ -1,7 +1,8 @@
 import { BaseObject } from "./components/objects";
 import { IGameRenderer } from "./GameRenderer";
 import { CollisionDetector } from "./CollisionDetector";
-import { Game, DEBUG_MODE } from "./Game";
+import { Game } from "./Game";
+import { renderDebugger } from "./DebuggerRenderer";
 
 export class World<T extends BaseObject = BaseObject> {
   private _objects: Map<string, T>;
@@ -29,19 +30,10 @@ export class World<T extends BaseObject = BaseObject> {
     this.objects.forEach((it) => {
       it.render(renderer);
 
-      if (DEBUG_MODE) {
-        it.renderDebug(renderer);
-        it.shape.renderDebug(renderer, { isColliding: it.isColliding });
+      if (this.game.isDebugMode) {
+        renderDebugger(renderer, it);
       }
     });
-
-    renderer.font = "60px Arial";
-    renderer.fillStyle = "#ffffff";
-    renderer.fillText(
-      String(this.objects.length),
-      20,
-      this.game.properties.height - 20
-    );
   };
 
   get objects(): T[] {

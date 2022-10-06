@@ -5,6 +5,8 @@ import { Hero } from "./objects/Hero";
 import { Obstacle } from "./objects/Obstacle";
 import { genArray, getRandomCoord } from "./utils";
 
+import "./index.css";
+
 const game = new Game();
 const world = new World(game);
 const hero = new Hero(world, {
@@ -54,5 +56,22 @@ genArray(2000).forEach(() => {
 });
 
 game.setWorld(world);
+game.setDebugMode(true);
+
+function renderButton() {
+  const root = document.getElementById("root");
+  if (!root) return;
+
+  const button = document.createElement("button");
+  button.classList.add("debugToggle");
+  button.innerText = "TOGGLE DEBUGGER";
+  button.onclick = () => {
+    game.setDebugMode(!game.isDebugMode);
+  };
+
+  root.appendChild(button);
+}
+
+renderButton();
 
 export { game };

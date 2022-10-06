@@ -16,9 +16,5 @@ export interface IShapeSerialized {
 export interface IBaseShape {
   transform: Transform;
   centerPosition: ICoord;
-  renderDebug(
-    renderer: IGameRenderer,
-    properties: { isColliding: boolean }
-  ): void;
   serialize(): IShapeSerialized;
 }
