@@ -1,3 +1,3 @@
-# 2D game engine
+# TWODIE
 
-A simple 2d game engine.
+A lightweight TypeScript framework for making 2D games.
