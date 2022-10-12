@@ -1,5 +1,5 @@
-import { BaseObject } from "./components/objects";
-import { ICoord } from "./shared";
+import type { BaseObject } from "./components/objects";
+import type { ICoord } from "./shared";
 
 export function outOfBoundary(
   source: BaseObject,

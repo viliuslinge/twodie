@@ -1,6 +1,7 @@
-import { GameRenderer } from "../../GameRenderer";
+import type { GameRenderer } from "../../GameRenderer";
 
-import { Sprite, ISpriteProperties } from "./Sprite";
+import { Sprite } from "./Sprite";
+import type { ISpriteProperties } from "./Sprite";
 
 interface IAnimatedSpriteProperties<T extends string = string>
   extends ISpriteProperties {

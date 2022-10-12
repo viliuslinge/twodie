@@ -1,10 +1,10 @@
-import { ITransformProperties } from "engine/components/Transform";
-import { IAttributesProperties } from "engine/components/Attributes";
-import { CircleShape } from "engine/components/shapes";
+import type { ITransformProperties } from "engine/components/Transform";
+import type { IAttributesProperties } from "engine/components/Attributes";
+import { RectShape } from "engine/components/shapes";
 import { Sprite } from "engine/components/sprites";
 import { BaseObject } from "engine/components/objects";
 import { Movement } from "engine/components/Movement";
-import { World } from "engine/World";
+import type { World } from "engine/World";
 
 import spritePNG from "../assets/ball.png";
 
@@ -17,8 +17,9 @@ export class Ball extends BaseObject<Sprite> {
   constructor(world: World, properties: IBallProperties) {
     super(world, {
       attributes: properties.attributes,
-      shape: new CircleShape({
-        radius: 15,
+      shape: new RectShape({
+        width: 32,
+        height: 16,
         transform: {
           position: {
             x: properties.transform.position.x,
@@ -29,10 +30,13 @@ export class Ball extends BaseObject<Sprite> {
       }),
       sprite: new Sprite({
         image: spritePNG,
-        frameHeight: 30,
-        frameWidth: 30,
+        frameHeight: 50,
+        frameWidth: 50,
         transform: {
-          position: properties.transform.position,
+          position: {
+            x: properties.transform.position.x - 9,
+            y: properties.transform.position.y - 32,
+          },
           scale: properties.transform.scale,
         },
       }),
@@ -57,8 +61,8 @@ export class Ball extends BaseObject<Sprite> {
     });
 
     this.sprite.transform.setPosition({
-      x: this.shape.transform.position.x + this.attributes.velocity.x,
-      y: this.shape.transform.position.y + this.attributes.velocity.y,
+      x: this.sprite.transform.position.x + this.attributes.velocity.x,
+      y: this.sprite.transform.position.y + this.attributes.velocity.y,
     });
 
     this.shape.transform.setPosition({

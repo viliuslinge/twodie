@@ -1,4 +1,4 @@
-type IUnsubscribe = () => void;
+export type IUnsubscribe = () => void;
 
 export class EventObserver<T extends Record<string, Record<string, any>>> {
   private subscriptions: Map<keyof T, Array<(input: T[keyof T]) => any>>;

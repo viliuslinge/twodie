@@ -1,7 +1,7 @@
-import { ICoord } from "../shared";
+import type { ICoord } from "../shared";
 
-import { BaseObject, IBaseObjectSerialized } from "./objects";
-import { CircleShape, RectShape, ShapeType } from "./shapes";
+import type { BaseObject, IBaseObjectSerialized } from "./objects";
+import type { CircleShape, RectShape } from "./shapes";
 
 /**
  * Utilities that use different algorithms to determine and change velocity

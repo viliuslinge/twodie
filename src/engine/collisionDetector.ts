@@ -1,8 +1,9 @@
-import { BaseObject } from "./components/objects";
-import { ShapeType, CircleShape, RectShape } from "./components/shapes";
+import type { BaseObject } from "./components/objects";
+import type { ShapeType, CircleShape, RectShape } from "./components/shapes";
 
 export const CollisionDetector = {
   detect,
+  checkIntersection,
 };
 
 function detect(objects: BaseObject[]): void {
@@ -17,7 +18,7 @@ function detect(objects: BaseObject[]): void {
       const obj = objects[idx];
       const targetObj = objects[targetIdx];
 
-      if (intersects(obj.shape, targetObj.shape)) {
+      if (checkIntersection(obj.shape, targetObj.shape)) {
         obj.addCollider({
           objectRef: targetObj,
           objectSnapshot: targetObj.serialize(),
@@ -31,7 +32,7 @@ function detect(objects: BaseObject[]): void {
   }
 }
 
-function intersects(s1: ShapeType, s2: ShapeType): boolean {
+function checkIntersection(s1: ShapeType, s2: ShapeType): boolean {
   if (s1.type === "circle") {
     if (s2.type === "circle") {
       return circleCircle(s1, s2);

@@ -1,4 +1,4 @@
-import { ICoord } from "../shared";
+import type { ICoord } from "../shared";
 
 export interface IAttributesSerialized {
   velocity: ICoord;

@@ -1,9 +1,9 @@
-import { ICoord } from "../../shared";
+import type { ICoord } from "../../shared";
 
-import { Transform, ITransformProperties } from "../Transform";
+import type { Transform, ITransformProperties } from "../Transform";
 
-import { CircleShape } from "./CircleShape";
-import { RectShape } from "./RectShape";
+import type { CircleShape } from "./CircleShape";
+import type { RectShape } from "./RectShape";
 
 export type ShapeType = RectShape | CircleShape;
 

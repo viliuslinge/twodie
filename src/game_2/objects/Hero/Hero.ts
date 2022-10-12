@@ -1,10 +1,10 @@
-import { ITransformProperties } from "engine/components/Transform";
-import { IAttributesProperties } from "engine/components/Attributes";
+import type { ITransformProperties } from "engine/components/Transform";
+import type { IAttributesProperties } from "engine/components/Attributes";
 import { CircleShape } from "engine/components/shapes";
 import { BaseObject } from "engine/components/objects";
 import { Movement } from "engine/components/Movement";
-import { World } from "engine/World";
-import { IKeyboardHandler } from "engine/KeyboardHandler";
+import type { World } from "engine/World";
+import type { IKeyboardHandler } from "engine/KeyboardHandler";
 
 import { HeroSprite } from "./HeroSprite";
 import { HeroKeyboardHandler } from "./HeroKeyboardHandler";
@@ -21,7 +21,7 @@ export class Hero extends BaseObject<HeroSprite, CircleShape> {
     super(world, {
       attributes: properties.attributes,
       shape: new CircleShape({
-        radius: 16,
+        radius: 80,
         transform: {
           position: {
             x: properties.transform.position.x,
@@ -32,7 +32,12 @@ export class Hero extends BaseObject<HeroSprite, CircleShape> {
       }),
       sprite: new HeroSprite({
         transform: {
-          position: properties.transform.position,
+          position: {
+            x:
+              properties.transform.position.x + 30 * properties.transform.scale,
+            y:
+              properties.transform.position.y + 30 * properties.transform.scale,
+          },
           scale: properties.transform.scale,
         },
       }),
@@ -63,64 +68,116 @@ export class Hero extends BaseObject<HeroSprite, CircleShape> {
     });
   };
 
-  moveLeft = (): void => {
-    this.sprite.setCurrentAnimationID("walk-left");
+  moveW = (): void => {
+    this.sprite.setCurrentAnimationID("run-w");
     this.attributes.setVelocity({
       x: -this.attributes.maxVelocity,
       y: this.attributes.velocity.y,
     });
   };
 
-  moveRight = (): void => {
-    this.sprite.setCurrentAnimationID("walk-right");
+  moveE = (): void => {
+    this.sprite.setCurrentAnimationID("run-e");
     this.attributes.setVelocity({
       x: this.attributes.maxVelocity,
       y: this.attributes.velocity.y,
     });
   };
 
-  moveUp = (): void => {
-    this.sprite.setCurrentAnimationID("walk-up");
+  moveN = (): void => {
+    this.sprite.setCurrentAnimationID("run-n");
     this.attributes.setVelocity({
       x: this.attributes.velocity.x,
       y: -this.attributes.maxVelocity,
     });
   };
 
-  moveDown = (): void => {
-    this.sprite.setCurrentAnimationID("walk-down");
+  moveS = (): void => {
+    this.sprite.setCurrentAnimationID("run-s");
     this.attributes.setVelocity({
       x: this.attributes.velocity.x,
       y: this.attributes.maxVelocity,
     });
   };
 
-  stopLeft = (): void => {
+  moveNW = (): void => {
+    this.sprite.setCurrentAnimationID("run-nw");
+    this.attributes.setVelocity({
+      x: -this.attributes.maxVelocity,
+      y: -this.attributes.maxVelocity,
+    });
+  };
+
+  moveNE = (): void => {
+    this.sprite.setCurrentAnimationID("run-ne");
+    this.attributes.setVelocity({
+      x: this.attributes.maxVelocity,
+      y: -this.attributes.maxVelocity,
+    });
+  };
+
+  moveSW = (): void => {
+    this.sprite.setCurrentAnimationID("run-sw");
+    this.attributes.setVelocity({
+      x: -this.attributes.maxVelocity,
+      y: this.attributes.maxVelocity,
+    });
+  };
+
+  moveSE = (): void => {
+    this.sprite.setCurrentAnimationID("run-se");
+    this.attributes.setVelocity({
+      x: this.attributes.maxVelocity,
+      y: this.attributes.maxVelocity,
+    });
+  };
+
+  stopW = (): void => {
     if (this.attributes.velocity.x <= 0) {
-      this.sprite.setCurrentAnimationID("idle-left");
+      this.sprite.setCurrentAnimationID("idle-w");
       this.stop();
     }
   };
 
-  stopRight = (): void => {
+  stopE = (): void => {
     if (this.attributes.velocity.x >= 0) {
-      this.sprite.setCurrentAnimationID("idle-right");
+      this.sprite.setCurrentAnimationID("idle-e");
       this.stop();
     }
   };
 
-  stopUp = (): void => {
+  stopN = (): void => {
     if (this.attributes.velocity.y <= 0) {
-      this.sprite.setCurrentAnimationID("idle-up");
+      this.sprite.setCurrentAnimationID("idle-n");
       this.stop();
     }
   };
 
-  stopDown = (): void => {
+  stopS = (): void => {
     if (this.attributes.velocity.y >= 0) {
-      this.sprite.setCurrentAnimationID("idle-down");
+      this.sprite.setCurrentAnimationID("idle-s");
       this.stop();
     }
+  };
+
+  stopNW = (): void => {
+    this.sprite.setCurrentAnimationID("idle-nw");
+    this.stop();
+  };
+
+  stopNE = (): void => {
+    this.sprite.setCurrentAnimationID("idle-ne");
+    this.stop();
+  };
+
+  stopSW = (): void => {
+    this.sprite.setCurrentAnimationID("idle-sw");
+    this.stop();
+  };
+
+  stopSE = (): void => {
+    this.sprite.setCurrentAnimationID("idle-se");
+    this.stop();
   };
 
   stop = (): void => {

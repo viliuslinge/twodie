@@ -1,27 +1,28 @@
 import { GameRenderer } from "./GameRenderer";
 import { GameLoop } from "./GameLoop";
-import { World } from "./World";
+import type { World } from "./World";
 import { EventObserver } from "./EventObserver";
-import { IGameEvents } from "./types";
+import type { IGameEvents } from "./types";
+import { Debugger } from "./Debugger";
 
 interface IGameProperties {
   rootElementID: string;
 }
 
 export class Game {
-  private loop: GameLoop;
   events: EventObserver<IGameEvents>;
+  loop: GameLoop;
   renderer: GameRenderer;
+  debugger: Debugger;
   world?: World;
-  isDebugMode: boolean;
 
   constructor(properties: IGameProperties) {
     this.events = new EventObserver();
-    this.loop = new GameLoop(this);
     this.renderer = new GameRenderer({
       rootElementID: properties.rootElementID,
     });
-    this.isDebugMode = false;
+    this.loop = new GameLoop(this);
+    this.debugger = new Debugger(this);
   }
 
   start = (): void => {
@@ -34,9 +35,5 @@ export class Game {
 
   setWorld = (world: World): void => {
     this.world = world;
-  };
-
-  setDebugMode = (value: boolean): void => {
-    this.isDebugMode = value;
   };
 }

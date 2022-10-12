@@ -1,8 +1,9 @@
-import { ICoord } from "../../shared";
+import type { ICoord } from "../../shared";
 
-import { Transform, ITransformProperties } from "../Transform";
+import { Transform } from "../Transform";
+import type { ITransformProperties } from "../Transform";
 
-import { IBaseShape, IShapeSerialized } from "./types";
+import type { IBaseShape, IShapeSerialized } from "./types";
 
 export interface ICircleShapeProperties {
   radius: number;

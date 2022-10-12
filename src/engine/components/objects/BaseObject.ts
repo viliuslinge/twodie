@@ -1,14 +1,14 @@
 import { uuid } from "../../lib/uuid";
-import { GameRenderer } from "../../GameRenderer";
-import { World } from "../../World";
+import type { GameRenderer } from "../../GameRenderer";
+import type { World } from "../../World";
 
-import {
-  Attributes,
+import { Attributes } from "../Attributes";
+import type {
   IAttributesSerialized,
   IAttributesProperties,
 } from "../Attributes";
-import { ShapeType, IShapeSerialized } from "../shapes";
-import { SpriteType } from "../sprites";
+import type { ShapeType, IShapeSerialized } from "../shapes";
+import type { SpriteType } from "../sprites";
 
 export interface IBaseObjectProperties<
   T extends SpriteType = SpriteType,

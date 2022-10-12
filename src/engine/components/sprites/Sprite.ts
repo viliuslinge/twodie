@@ -1,6 +1,7 @@
-import { GameRenderer } from "../../GameRenderer";
+import type { GameRenderer } from "../../GameRenderer";
 
-import { Transform, ITransformProperties } from "../Transform";
+import { Transform } from "../Transform";
+import type { ITransformProperties } from "../Transform";
 
 export interface ISpriteProperties {
   image: string;
